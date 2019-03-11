@@ -12,4 +12,7 @@
     "esModuleInterop": true,
     "pretty": true
   },
+  "include": [
+    "src/**/*.ts"
+  ]
 }
