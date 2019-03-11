@@ -1,0 +1,10 @@
+{
+  "name": "domoka-backend",
+  "version": "1.0.0",
+  "description": "Backend of DomoKa.",
+  "main": "lib/index.js",
+  "repository": "https://github.com/paulhobbel/domoka.git",
+  "author": "Paul Hobbel <hello@paulhobbel.me>",
+  "license": "MIT",
+  "private": true
+}
