@@ -10,9 +10,9 @@ export class Led {
     id: number;
     device: string;
 
-    constructor (id: number, ip: string, device: string) {
+    constructor (id: number, ip: string, device: string, isLit: boolean) {
         this.device = device;
-        this.lit = false;
+        this.lit = isLit;
         this.id = id;
         this.client = mqtt.connect('mqtt://' + ip);
 
@@ -35,12 +35,16 @@ export class Led {
                     if (manipulationMessage.turnOn) {
                         console.log(`[led] turning on led ${this.id} on device ${this.device}`);
                     } else {
-                        console.log(`[led] turning off led ${this.id} on device ${this.device}`)
+                        console.log(`[led] turning off led ${this.id} on device ${this.device}`);
                     }
 
                     this.lit = manipulationMessage.turnOn;
                 break;
             }
+        });
+
+        this.client.on('error', (error) => {
+            console.log(`[led] error: ${error.name}, message: ${error.message}`);
         });
     }
 

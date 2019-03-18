@@ -33,6 +33,10 @@ export class Controller {
                 break;
             }
         });
+
+        this.client.on('error', (error) => {
+            console.log(`[controller] error: ${error.name}, message: ${error.message}`);
+        });
     }
 
     turnOnLed(id: number) : void {
