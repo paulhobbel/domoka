@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <app-toolbar/>
-    <router-view/>
+    <b-container>
+      <router-view/>
+    </b-container>
+
   </div>
 </template>
 
@@ -14,7 +17,6 @@ export default {
   }
 };
 </script>
-
 
 <style>
 #app {
