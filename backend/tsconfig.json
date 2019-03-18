@@ -10,7 +10,10 @@
     "sourceRoot": "src",
     "noImplicitAny": true,
     "esModuleInterop": true,
-    "pretty": true
+    "pretty": true,
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
     "src/**/*.ts"
