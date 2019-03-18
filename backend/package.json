@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "koa": "^2.7.0",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "mqtt": "^2.18.8"
   }
 }
