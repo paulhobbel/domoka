@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <app-toolbar/>
-    <b-container>
+    <b-container class="content">
       <router-view/>
     </b-container>
 
@@ -37,5 +37,9 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.content{
+  padding-top: 30px;
 }
 </style>

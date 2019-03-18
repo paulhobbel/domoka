@@ -1,17 +1,34 @@
 <template>
   <div class="home">
-    <app-cards />
+    <b-card
+      title="Devices"
+      class="mb-4">
+
+      <app-table/>
+
+    </b-card>
+     <b-card
+      title="Power Savings"
+      class="mb-4">
+
+    </b-card>
+
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import AppCards from '@/components/AppCards.vue';
+import AppTable from '@/components/AppTable.vue';
 
 export default {
-  name: 'home',
   components: {
-    AppCards
+    AppTable
   }
 };
 </script>
+
+<style scoped>
+  .content{
+    padding-top: 30px;
+  }
+</style>
