@@ -1,7 +1,7 @@
 <template>
   <b-navbar toggleable="lg" type="dark" variant="dark">
     <b-container>
-      <b-navbar-brand href="#">Domoka</b-navbar-brand>
+      <b-navbar-brand href="#" to="/">Domoka</b-navbar-brand>
 
       <b-navbar-toggle target="nav_collapse" />
 
