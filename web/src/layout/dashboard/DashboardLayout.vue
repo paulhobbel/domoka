@@ -7,7 +7,6 @@
         <sidebar-link to="/table-list" name="Table List" icon="ti-view-list-alt"/>
         <sidebar-link to="/typography" name="Typography" icon="ti-text"/>
         <sidebar-link to="/icons" name="Icons" icon="ti-pencil-alt2"/>
-        <sidebar-link to="/maps" name="Map" icon="ti-map"/>
         <sidebar-link to="/notifications" name="Notifications" icon="ti-bell"/>
       </template>
       <mobile-menu>
@@ -50,10 +49,10 @@
 <style lang="scss">
 </style>
 <script>
-import TopNavbar from "./TopNavbar.vue";
-import ContentFooter from "./ContentFooter.vue";
-import DashboardContent from "./Content.vue";
-import MobileMenu from "./MobileMenu";
+import TopNavbar from './TopNavbar.vue';
+import ContentFooter from './ContentFooter.vue';
+import DashboardContent from './Content.vue';
+import MobileMenu from './MobileMenu';
 export default {
   components: {
     TopNavbar,
@@ -62,7 +61,7 @@ export default {
     MobileMenu
   },
   methods: {
-    toggleSidebar() {
+    toggleSidebar () {
       if (this.$sidebar.showSidebar) {
         this.$sidebar.displaySidebar(false);
       }

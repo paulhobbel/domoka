@@ -7,11 +7,11 @@
             Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
         -->
     <!-- -->
-    <div class="sidebar-wrapper" id="style-3">
-      <div class="logo">
-        <a href="#" class="simple-text">
-            <div class="logo-img">
-                <img src="@/assets/img/vue-logo.png" alt="">
+    <div class='sidebar-wrapper' id='style-3'>
+      <div class='logo'>
+        <a href='#' class='simple-text'>
+            <div class='logo-img'>
+                <img src='@/assets/logo.png' alt="">
             </div>
           {{title}}
         </a>
@@ -37,32 +37,32 @@
   </div>
 </template>
 <script>
-import MovingArrow from "./MovingArrow.vue";
-import SidebarLink from "./SidebarLink";
+import MovingArrow from './MovingArrow.vue';
+import SidebarLink from './SidebarLink';
 export default {
   props: {
     title: {
       type: String,
-      default: "Paper Dashboard"
+      default: 'Domotika'
     },
     backgroundColor: {
       type: String,
-      default: "black",
+      default: 'black',
       validator: value => {
-        let acceptedValues = ["white", "black", "darkblue"];
+        let acceptedValues = ['white', 'black', 'darkblue'];
         return acceptedValues.indexOf(value) !== -1;
       }
     },
     activeColor: {
       type: String,
-      default: "success",
+      default: 'success',
       validator: value => {
         let acceptedValues = [
-          "primary",
-          "info",
-          "success",
-          "warning",
-          "danger"
+          'primary',
+          'info',
+          'success',
+          'warning',
+          'danger'
         ];
         return acceptedValues.indexOf(value) !== -1;
       }
@@ -76,7 +76,7 @@ export default {
       default: true
     }
   },
-  provide() {
+  provide () {
     return {
       autoClose: this.autoClose,
       addLink: this.addLink,
@@ -92,11 +92,11 @@ export default {
      * Styles to animate the arrow near the current active sidebar link
      * @returns {{transform: string}}
      */
-    arrowMovePx() {
+    arrowMovePx () {
       return this.linkHeight * this.activeLinkIndex;
     }
   },
-  data() {
+  data () {
     return {
       linkHeight: 65,
       activeLinkIndex: 0,
@@ -107,26 +107,26 @@ export default {
     };
   },
   methods: {
-    findActiveLink() {
+    findActiveLink () {
       this.links.forEach((link, index) => {
         if (link.isActive()) {
           this.activeLinkIndex = index;
         }
       });
     },
-    addLink(link) {
+    addLink (link) {
       const index = this.$slots.links.indexOf(link.$vnode);
       this.links.splice(index, 0, link);
     },
-    removeLink(link) {
+    removeLink (link) {
       const index = this.links.indexOf(link);
       if (index > -1) {
         this.links.splice(index, 1);
       }
     }
   },
-  mounted() {
-    this.$watch("$route", this.findActiveLink, {
+  mounted () {
+    this.$watch('$route', this.findActiveLink, {
       immediate: true
     });
   }
