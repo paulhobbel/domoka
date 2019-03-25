@@ -43,7 +43,10 @@ export class DeviceController {
         await deviceRepository.update(device.id, device);
 
         ctx.status = 200;
-
+        ctx.body = {
+            statusCode: 200,
+            message: 'Edited the item from devices'
+        };
     }
 
     deleteDevice = async (ctx: Koa.BaseContext) => {

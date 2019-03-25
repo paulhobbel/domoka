@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import {Schedule} from "./Schedule";
 
 export enum DeviceType {
     Switch = 'switch',
@@ -18,6 +19,9 @@ export class Device {
 
     @Column({ nullable: true })
     location: string;
+
+    @ManyToOne(type => Schedule, schedule => schedule.devices, { nullable: true })
+    schedule: Schedule;
 
     @Column()
     type: DeviceType;
