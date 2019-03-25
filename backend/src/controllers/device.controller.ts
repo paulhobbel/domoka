@@ -26,4 +26,23 @@ export class DeviceController {
         ctx.status = 200;
         ctx.body = device;
     }
+
+    editDevice = async (ctx: Koa.BaseContext) => {
+        const { name, description, location, type } = ctx.request.body;
+        const deviceRepository = getRepository(Device);
+
+        let device = await deviceRepository.findOne(+ctx.params.id);
+        if(!device)
+            throw Boom.notFound('Device with given id not found');
+
+        device.name = name || device.name;
+        device.description = description || device.description;
+        device.location || location || device.location;
+        device.type = type || device.type;
+
+        await deviceRepository.update(device.id, device);
+
+        ctx.status = 200;
+
+    }
 }
