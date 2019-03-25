@@ -7,6 +7,8 @@ const router = new Router();
 router.get('/', controllers.misc.getStatus);
 router.get('/devices', JwtMiddleware, controllers.device.getDevices);
 router.get('/devices/:id', JwtMiddleware, controllers.device.getDevice);
+router.delete('/devices/:id', JwtMiddleware, controllers.device.deleteDevice);
+router.patch('/devices/:id', JwtMiddleware, controllers.device.editDevice);
 
 router.post('/auth/login', controllers.auth.postLogin);
 router.post('/auth/register', controllers.auth.postRegister);

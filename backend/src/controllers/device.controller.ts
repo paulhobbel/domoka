@@ -45,4 +45,20 @@ export class DeviceController {
         ctx.status = 200;
 
     }
+
+    deleteDevice = async (ctx: Koa.BaseContext) => {
+        const deviceRepository = getRepository(Device);
+
+        const device = await deviceRepository.findOne(+ctx.params.id);
+        if(!device)
+            throw Boom.notFound('Device with given id not found');
+
+        deviceRepository.delete(+ctx.params.id);
+
+        ctx.status = 200;
+        ctx.body = {
+            statusCode: 200,
+            message: 'Deleted the item from devices'
+        };
+    }
 }
