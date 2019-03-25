@@ -1,11 +1,11 @@
 import { IMessage } from './iMessage';
 
-export class LitMessage implements IMessage {
+export class IsOnMessage implements IMessage {
     id: number;
-    isLit: boolean;
+    isOn: boolean;
 
-    constructor(id: number, isLit: boolean) {
+    constructor(id: number, isOn: boolean) {
         this.id = id;
-        this.isLit = isLit;
+        this.isOn = isOn;
     }
 }

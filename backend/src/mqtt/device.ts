@@ -1,26 +1,26 @@
 import mqtt, { MqttClient } from 'mqtt';
 import { IMessage } from './messages/iMessage';
-import { LitMessage } from './messages/litMessage';
+import { IsOnMessage } from './messages/litMessage';
 import { ConnectedMessage } from './messages/connectedMessage';
 import { ManipulationMessage } from './messages/manipulationMessage';
 
-export class Led {
+export class Device {
     client: mqtt.MqttClient;
-    lit: boolean;
+    isOn: boolean;
     id: number;
-    device: string;
+    name: string;
 
-    constructor (id: number, ip: string, device: string, isLit: boolean) {
-        this.device = device;
-        this.lit = isLit;
+    constructor (id: number, ip: string, name: string, isOn: boolean) {
+        this.name = name;
+        this.isOn = isOn;
         this.id = id;
         this.client = mqtt.connect('mqtt://' + ip);
 
         this.client.on('connect', () => {
-            this.client.subscribe(this.device + '/led/manipulation');
+            this.client.subscribe(this.name + '/manipulation');
             
             this.sendConnectedMessage();
-            this.sendLitUpdate();
+            this.sendIsOnUpdate();
         });
 
         this.client.on('message', (topic, message) => {
@@ -29,36 +29,36 @@ export class Led {
             if(obj.id != this.id) return;
 
             switch (topic) {
-                case (this.device + '/led/manipulation'):
+                case (this.name + '/manipulation'):
                     let manipulationMessage: ManipulationMessage = obj as ManipulationMessage;
 
                     if (manipulationMessage.turnOn) {
-                        console.log(`[led] turning on led ${this.id} on device ${this.device}`);
+                        console.log(`[${this.name}] turning on id ${this.id} on device ${this.name}`);
                     } else {
-                        console.log(`[led] turning off led ${this.id} on device ${this.device}`);
+                        console.log(`[${this.name}] turning off id ${this.id} on device ${this.name}`);
                     }
 
-                    this.lit = manipulationMessage.turnOn;
+                    this.isOn = manipulationMessage.turnOn;
                 break;
             }
         });
 
         this.client.on('error', (error) => {
-            console.log(`[led] error: ${error.name}, message: ${error.message}`);
+            console.log(`[${this.name}] error: ${error.name}, message: ${error.message}`);
         });
     }
 
-    private sendLitUpdate() : void {
-        let message: IMessage = new LitMessage(this.id, this.lit);
+    private sendIsOnUpdate() : void {
+        let message: IMessage = new IsOnMessage(this.id, this.isOn);
         let messageString: string = JSON.stringify(message);
 
-        this.client.publish(this.device + '/led/lit', messageString);
+        this.client.publish(this.name + '/on', messageString);
     }
 
     private sendConnectedMessage() : void {
         let connectedMessage: IMessage = new ConnectedMessage(this.id, true);
         let connectedMessageJson: string = JSON.stringify(connectedMessage);
 
-        this.client.publish(this.device + '/led/connected', connectedMessageJson);
+        this.client.publish(this.name + '/connected', connectedMessageJson);
     }
 }

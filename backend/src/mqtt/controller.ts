@@ -1,35 +1,35 @@
 import mqtt, { MqttClient, Client } from 'mqtt';
 import { IMessage } from './messages/iMessage';
 import { ConnectedMessage } from './messages/connectedMessage';
-import { LitMessage } from './messages/litMessage';
+import { IsOnMessage } from './messages/litMessage';
 import { ManipulationMessage } from './messages/manipulationMessage';
 
 export class Controller {
     client: mqtt.MqttClient;
-    device: string;
+    deviceName: string;
 
-    constructor(ip: string, device: string) { 
+    constructor(ip: string, deviceName: string) { 
         this.client = mqtt.connect('mqtt://' + ip);
-        this.device = device;
+        this.deviceName = deviceName;
 
         this.client.on('connect', () => {
-            this.client.subscribe(this.device + '/led/connected');
-            this.client.subscribe(this.device + '/led/lit');
+            this.client.subscribe(this.deviceName + '/connected');
+            this.client.subscribe(this.deviceName + '/on');
         });
 
         this.client.on('message', (topic, message) => {
             let obj: IMessage = JSON.parse(message.toString());
 
             switch (topic) {
-                case (this.device + '/led/connected'):
+                case (this.deviceName + '/connected'):
                     let connectedMessage: ConnectedMessage = obj as ConnectedMessage;
 
-                    console.log(`[controller] received led ${connectedMessage.id} connection status: ${connectedMessage.connected}`);
+                    console.log(`[controller] received device id: ${connectedMessage.id} connection status: ${connectedMessage.connected}`);
                 break;
-                case (this.device + '/led/lit'):
-                    let litMessage: LitMessage = obj as LitMessage;
+                case (this.deviceName + '/on'):
+                    let isOnMessage: IsOnMessage = obj as IsOnMessage;
 
-                    console.log(`[controller] received led ${litMessage.id} isLit status: ${litMessage.isLit}`);
+                    console.log(`[controller] received device id: ${isOnMessage.id} on status: ${isOnMessage.isOn}`);
                 break;
             }
         });
@@ -39,11 +39,11 @@ export class Controller {
         });
     }
 
-    turnOnLed(id: number) : void {
+    turnOn(id: number) : void {
         this.sendManipulationMessage(id, true);
     }
 
-    turnOffLed(id: number) : void {
+    turnOff(id: number) : void {
         this.sendManipulationMessage(id, false);
     }
 
@@ -51,6 +51,6 @@ export class Controller {
         let message: IMessage = new ManipulationMessage(id, turnOn);
         let messageString: string = JSON.stringify(message);
 
-        this.client.publish(this.device + '/led/manipulation', messageString);
+        this.client.publish(this.deviceName + '/manipulation', messageString);
     }
 }
