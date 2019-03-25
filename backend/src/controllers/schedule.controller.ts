@@ -3,7 +3,20 @@ import Boom from 'boom';
 import { getRepository } from 'typeorm';
 import { Schedule } from '../entities/Schedule';
 
-export class DeviceController {
+export class ScheduleController {
+
+    createSchedule = async (ctx: Koa.BaseContext) => {
+        const {schedule} = ctx.request.body;
+        const scheduleRepository = getRepository(Schedule);
+
+        scheduleRepository.create(schedule);
+        ctx.status = 200;
+        ctx.body = {
+            status: 200,
+            message: 'ok'
+        }
+    }
+
     getSchedules = async (ctx: Koa.BaseContext) => {
         const scheduleRepositiry = getRepository(Schedule);
 
