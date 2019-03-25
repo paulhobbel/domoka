@@ -7,6 +7,15 @@ const router = new Router();
 router.get('/', controllers.misc.getStatus);
 router.get('/devices', JwtMiddleware, controllers.device.getDevices);
 router.get('/devices/:id', JwtMiddleware, controllers.device.getDevice);
+router.delete('/devices/:id', JwtMiddleware, controllers.device.deleteDevice);
+router.patch('/devices/:id', JwtMiddleware, controllers.device.editDevice);
+router.post('/devices', JwtMiddleware, controllers.device.createDevice);
+
+router.get('/schedules', JwtMiddleware, controllers.schedule.getSchedules);
+router.get('/schedules/:id', JwtMiddleware, controllers.schedule.getSchedule);
+router.delete('/schedules/:id', JwtMiddleware, controllers.schedule.deleteSchedule);
+router.patch('/schedules/:id', JwtMiddleware, controllers.schedule.editSchedule);
+router.post('/schedules', JwtMiddleware, controllers.schedule.createSchedule);
 
 router.get('/users/@me', JwtMiddleware, controllers.user.getMe);
 

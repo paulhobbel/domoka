@@ -4,7 +4,7 @@
     <b-modal
       id="modalGroup"
       ref="modal"
-      title="Edit Device"
+      title="Edit Schedule"
       @ok="handleOk"
       @shown="clearFields"
     >
@@ -31,7 +31,21 @@
         id="newlist"
         label="Choose devices:"
         label-for="exampleInput1">
-        <b-form-select multiple :select-size="4" v-model="options" :options="options" />
+        <b-form-select multiple :select-size="4" :options="options" />
+      </b-form-group>
+
+        <b-form-group
+        id="Start Time:"
+        label="Start:"
+        label-for="exampleInput1">
+        <b-form-input v-model="text1" type="text" placeholder="Enter the time like 00:00. from 0 to 24h" />
+      </b-form-group>
+
+        <b-form-group
+        id="End Time"
+        label="End:"
+        label-for="exampleInput1">
+        <b-form-input v-model="text1" type="text" placeholder="Enter the time like 00:00. from 0 to 24h " />
       </b-form-group>
       </form>
     </b-modal>

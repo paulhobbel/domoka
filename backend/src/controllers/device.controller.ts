@@ -4,6 +4,19 @@ import { getRepository } from 'typeorm';
 import { Device } from '../entities';
 
 export class DeviceController {
+
+    createDevice = async (ctx: Koa.BaseContext) => {
+        const {device} = ctx.request.body;
+        const deviceRepository = getRepository(Device);
+
+        deviceRepository.create(device);
+        ctx.status = 200;
+        ctx.body = {
+            status: 200,
+            message: 'ok'
+        }
+    }
+
     getDevices = async (ctx: Koa.BaseContext) => {
         const deviceRepository = getRepository(Device);
 
@@ -43,6 +56,25 @@ export class DeviceController {
         await deviceRepository.update(device.id, device);
 
         ctx.status = 200;
+        ctx.body = {
+            statusCode: 200,
+            message: 'Edited the item from devices'
+        };
+    }
 
+    deleteDevice = async (ctx: Koa.BaseContext) => {
+        const deviceRepository = getRepository(Device);
+
+        const device = await deviceRepository.findOne(+ctx.params.id);
+        if(!device)
+            throw Boom.notFound('Device with given id not found');
+
+        deviceRepository.delete(+ctx.params.id);
+
+        ctx.status = 200;
+        ctx.body = {
+            statusCode: 200,
+            message: 'Deleted the item from devices'
+        };
     }
 }
