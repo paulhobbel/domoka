@@ -1,11 +1,11 @@
 import { IMessage } from './iMessage';
 
 export class ConnectedMessage implements IMessage {
-    id: number;
+    name: string;
     connected: boolean;
 
-    constructor(id: number, connected: boolean) {
-        this.id = id;
+    constructor(name: string, connected: boolean) {
+        this.name = name;
         this.connected = connected;
     }
 }

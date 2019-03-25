@@ -1,44 +1,47 @@
 import mqtt, { MqttClient } from 'mqtt';
 import { IMessage } from './messages/iMessage';
-import { IsOnMessage } from './messages/isOnMessage';
 import { ConnectedMessage } from './messages/connectedMessage';
 import { ManipulationMessage } from './messages/manipulationMessage';
+import { IElectronicComponent } from './components/iElectronicComponent';
 
 export class Device {
-    client: mqtt.MqttClient;
-    isOn: boolean;
-    id: number;
+    client: MqttClient;
     name: string;
+    components: Array<IElectronicComponent>;
 
-    constructor (id: number, ip: string, name: string, isOn: boolean) {
+    constructor (ip: string, name: string) {
         this.name = name;
-        this.isOn = isOn;
-        this.id = id;
         this.client = mqtt.connect('mqtt://' + ip);
+        this.components = new Array<IElectronicComponent>();
 
         this.client.on('connect', () => {
             this.client.subscribe(this.name + '/manipulation');
             
             this.sendConnectedMessage();
-            this.sendIsOnUpdate();
         });
 
         this.client.on('message', (topic, message) => {
             let obj: IMessage = JSON.parse(message.toString());
 
-            if(obj.id != this.id) return;
-
             switch (topic) {
                 case (this.name + '/manipulation'):
                     let manipulationMessage: ManipulationMessage = obj as ManipulationMessage;
 
-                    if (manipulationMessage.turnOn) {
-                        console.log(`[${this.name}] turning on id ${this.id} on device ${this.name}`);
-                    } else {
-                        console.log(`[${this.name}] turning off id ${this.id} on device ${this.name}`);
-                    }
+                    this.components.forEach((element) => {
+                        if(element.id == manipulationMessage.id) {
+                            if (manipulationMessage.turnOn) {
+                                element.isOn = true;
 
-                    this.isOn = manipulationMessage.turnOn;
+                                console.log(`[${this.name}] turning on component ${element.id}`);
+                                return;
+                            } else {
+                                element.isOn = false;
+
+                                console.log(`[${this.name}] turning off component ${element.id}`);
+                                return;
+                            }
+                        }
+                    });                    
                 break;
             }
         });
@@ -48,15 +51,12 @@ export class Device {
         });
     }
 
-    private sendIsOnUpdate() : void {
-        let message: IMessage = new IsOnMessage(this.id, this.isOn);
-        let messageString: string = JSON.stringify(message);
-
-        this.client.publish(this.name + '/on', messageString);
+    addElectronicComponent(electronicComponent: IElectronicComponent) : void{
+        this.components.push(electronicComponent);
     }
 
     private sendConnectedMessage() : void {
-        let connectedMessage: IMessage = new ConnectedMessage(this.id, true);
+        let connectedMessage: IMessage = new ConnectedMessage(this.name, true);
         let connectedMessageJson: string = JSON.stringify(connectedMessage);
 
         this.client.publish(this.name + '/connected', connectedMessageJson);

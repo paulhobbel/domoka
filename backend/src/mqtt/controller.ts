@@ -1,11 +1,10 @@
-import mqtt, { MqttClient, Client } from 'mqtt';
+import mqtt, { MqttClient } from 'mqtt';
 import { IMessage } from './messages/iMessage';
 import { ConnectedMessage } from './messages/connectedMessage';
-import { IsOnMessage } from './messages/isOnMessage';
 import { ManipulationMessage } from './messages/manipulationMessage';
 
 export class Controller {
-    client: mqtt.MqttClient;
+    client: MqttClient;
     deviceName: string;
 
     constructor(ip: string, deviceName: string) { 
@@ -14,7 +13,6 @@ export class Controller {
 
         this.client.on('connect', () => {
             this.client.subscribe(this.deviceName + '/connected');
-            this.client.subscribe(this.deviceName + '/on');
         });
 
         this.client.on('message', (topic, message) => {
@@ -24,12 +22,7 @@ export class Controller {
                 case (this.deviceName + '/connected'):
                     let connectedMessage: ConnectedMessage = obj as ConnectedMessage;
 
-                    console.log(`[controller] received device id: ${connectedMessage.id} connection status: ${connectedMessage.connected}`);
-                break;
-                case (this.deviceName + '/on'):
-                    let isOnMessage: IsOnMessage = obj as IsOnMessage;
-
-                    console.log(`[controller] received device id: ${isOnMessage.id} on status: ${isOnMessage.isOn}`);
+                    console.log(`[controller] received device id: ${connectedMessage.name} connection status: ${connectedMessage.connected}`);
                 break;
             }
         });
