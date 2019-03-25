@@ -1,13 +1,11 @@
 import Vue from 'vue';
-import App from './App.vue';
-import router from './router';
+import App from './App';
+import router from './router/index';
 import store from './store';
-import BootstrapVue from 'bootstrap-vue';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
+import PaperDashboard from './plugins/paperDashboard';
+import 'vue-notifyjs/themes/default.css';
 
-Vue.use(BootstrapVue);
-Vue.config.productionTip = false;
+Vue.use(PaperDashboard);
 
 new Vue({
   router,
