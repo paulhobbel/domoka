@@ -25,17 +25,27 @@
 <script>
 // @ is an alias to /src
 import AppEditPopUp from '@/components/AppEditPopUp.vue';
+import { mapState, mapActions } from 'vuex';
+
 
 export default {
   data: () => ({
-    fields: ['number', 'name', 'location', 'status', 'edit'],
-    items: [
-      { number: 1, name: 'lamp 1', location: 'Kitchen', status: true },
-      { number: 2, name: 'lamp 2', location: 'Bedroom', status: false },
-      { number: 3, name: 'lamp 3', location: 'Living Room', status: true },
-      { number: 4, name: 'lamp 4', location: 'Bathroom', status: false }
-    ]
+    fields: ['id', 'name', 'location', 'status', 'edit'],
+    // items: [
+    //   { number: 1, name: 'lamp 1', location: 'Kitchen', status: true },
+    //   { number: 2, name: 'lamp 2', location: 'Bedroom', status: false },
+    //   { number: 3, name: 'lamp 3', location: 'Living Room', status: true },
+    //   { number: 4, name: 'lamp 4', location: 'Bathroom', status: false }
+    // ]
   }),
+  computed: {
+    ...mapState('devices', {
+      items: state => state.devices.map(device => ({
+        ...device,
+        status: false
+      }))
+    })
+  },
   methods: {
     toggleStatus (row, flag) {
       this.items[row.index].status = flag;
@@ -48,7 +58,11 @@ export default {
     },
     addItem () {
 
-    }
+    },
+    ...mapActions('devices', ['fetchAll'])
+  },
+  mounted() {
+    this.fetchAll();
   },
   components: {
     AppEditPopUp

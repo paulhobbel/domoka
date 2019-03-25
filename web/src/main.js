@@ -10,8 +10,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 
-store.dispatch('devices/fetch');
-
 new Vue({
   router,
   store,
