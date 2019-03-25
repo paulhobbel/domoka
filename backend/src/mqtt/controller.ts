@@ -22,7 +22,7 @@ export class Controller {
                 case (this.deviceName + '/connected'):
                     let connectedMessage: ConnectedMessage = obj as ConnectedMessage;
 
-                    console.log(`[controller] received device id: ${connectedMessage.name} connection status: ${connectedMessage.connected}`);
+                    console.log(`[controller] received device: ${connectedMessage.name} connection status: ${connectedMessage.connected}`);
                 break;
             }
         });
