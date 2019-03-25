@@ -14,17 +14,18 @@
            <b-button @click="deleteItem(row, $event)" variant="danger">Delete</b-button>
         </template>
       </b-table>
-
+      <b-button v-b-modal.modalAdd variant="primary">Add</b-button>
     </b-card>
 
     <app-edit-pop-up/>
-
+    <app-add-pop-up/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import AppEditPopUp from '@/components/AppEditPopUp.vue';
+import AppAddPopUp from '@/components/AppAddPopUp.vue';
 import { mapState, mapActions } from 'vuex';
 
 
@@ -65,7 +66,8 @@ export default {
     this.fetchAll();
   },
   components: {
-    AppEditPopUp
+    AppEditPopUp,
+    AppAddPopUp
   }
 };
 </script>
