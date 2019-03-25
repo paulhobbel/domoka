@@ -1,6 +1,6 @@
 import mqtt, { MqttClient } from 'mqtt';
 import { IMessage } from './messages/iMessage';
-import { IsOnMessage } from './messages/litMessage';
+import { IsOnMessage } from './messages/isOnMessage';
 import { ConnectedMessage } from './messages/connectedMessage';
 import { ManipulationMessage } from './messages/manipulationMessage';
 

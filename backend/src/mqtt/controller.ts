@@ -1,7 +1,7 @@
 import mqtt, { MqttClient, Client } from 'mqtt';
 import { IMessage } from './messages/iMessage';
 import { ConnectedMessage } from './messages/connectedMessage';
-import { IsOnMessage } from './messages/litMessage';
+import { IsOnMessage } from './messages/isOnMessage';
 import { ManipulationMessage } from './messages/manipulationMessage';
 
 export class Controller {
