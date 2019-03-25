@@ -33,23 +33,35 @@ export default {
     async login ({ commit }, { username, password }) {
       commit('CLEAR_ERROR');
       try {
-        const { data } = await AuthService.login(username, password);
+        const { token, user } = await AuthService.login(username, password);
 
-        localStorage.setItem('token', data.token);
-        commit('SET_TOKEN', data.token);
-        commit('SET_USERNAME', data.user.username);
+        localStorage.setItem('token', token);
+        commit('SET_TOKEN', token);
+        commit('SET_USERNAME', user.username);
       } catch (err) {
         // console.log(err.response.data.message);
         localStorage.removeItem('token');
         commit('SET_ERROR', err.response.data.message);
       }
     },
+    async fetchUser ({ commit, state }) {
+      if (!state.token) {
+        return false; // TODO: Throw an auth error
+      }
+
+      const { user } = await AuthService.fetchUser();
+
+      commit('SET_USERNAME', user.username);
+    },
     logout ({ commit }) {
+      localStorage.removeItem('token');
       commit('CLEAR_TOKEN');
       commit('CLEAR_USERNAME');
+      commit('CLEAR_ERROR');
     }
   },
   getters: {
-    isLoggedIn: state => state.token != null && state.username != null
+    isLoggedIn: state => state.token != null,
+    getBearerToken: state => state.token
   }
 };

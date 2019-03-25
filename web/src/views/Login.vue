@@ -2,7 +2,7 @@
   <div class="home">
    <b-card
     title="Login">
-    <b-form @submit="onSubmit">
+    <b-form @submit.prevent="onSubmit">
       <b-form-group id="usernameInput" label="Username:" label-for="exampleInput1">
         <b-form-input
           id="username"
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   data () {
     return {
@@ -39,9 +41,15 @@ export default {
     };
   },
   methods: {
-    onSubmit (evt) {
-      evt.preventDefault();
-      alert(JSON.stringify(this.form));
+    ...mapActions('auth', ['login']),
+    async onSubmit (evt) {
+      //evt.preventDefault();
+      //alert(JSON.stringify(this.form));
+
+      await this.login(this.form);
+      this.$router.push(this.$route.query.redirect || '/');
+
+
     }
   }
 };

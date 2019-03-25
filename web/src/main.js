@@ -10,10 +10,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 
-console.log(store);
-
-store.dispatch('auth/login', { username: 'paulhobbel1', password: 'testpass' });
-
 new Vue({
   router,
   store,
