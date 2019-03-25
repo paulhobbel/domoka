@@ -1,4 +1,5 @@
 import Koa from "koa";
+import { STATUS_CODES } from "http";
 
 export function ErrorMiddleware(ctx: Koa.Context, next: () => Promise<any>) {
     return next().catch(err => {
@@ -6,10 +7,11 @@ export function ErrorMiddleware(ctx: Koa.Context, next: () => Promise<any>) {
             ctx.status = err.output.statusCode;
             ctx.body = err.output.payload
         } else {
-            ctx.status = 500,
+            console.log(err);
+            ctx.status = err.status || 500,
             ctx.body = {
-                statusCode: 500,
-                error: 'Internal Server Error',
+                statusCode: err.status,
+                error: STATUS_CODES[err.status || 500],
                 message: err.message || 'Internal Server Error'
             }
         }

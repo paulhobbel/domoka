@@ -19,3 +19,7 @@ import { ErrorMiddleware } from './middleware';
         console.log('> Server listening at port 3000');
     });
 })();
+
+process.on('unhandledRejection', err => {
+    console.error(err);
+})
