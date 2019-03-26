@@ -33,7 +33,7 @@ import { mapActions, mapState } from 'vuex';
 
 export default {
   data: () => ({
-    fields: ['id', 'name', 'description', 'status', 'beginTime', 'endTime', 'edit'],
+    fields: ['id', 'name', 'description', 'status', 'beginTime', 'endTime', 'edit']
     // items: [
     //   { number: 1, name: 'wake-up bedroom', disciprtion: 'When I wake up thete is light', status: true, starttime: '06:32', endtime: '08:20' },
     //   { number: 3, name: 'Light in evening', disciprtion: 'Sensor that looks if it is dark enough for the lights. and turns them on', status: true, starttime: '20:00', endtime: '02:00' }
@@ -63,7 +63,7 @@ export default {
       this.$refs.modal.$emit('add');
     }
   },
-  mounted() {
+  mounted () {
     this.fetchAll();
   },
   components: {

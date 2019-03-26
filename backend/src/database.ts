@@ -4,6 +4,7 @@ import path from 'path';
 import { Device, User } from './entities';
 import { Schedule } from './entities/Schedule';
 import { Power } from './entities/Power';
+import { DeviceSubscriber } from './subscribers';
 
 export const connect = async () => createConnection({
     type: 'sqlite',
@@ -11,4 +12,5 @@ export const connect = async () => createConnection({
     synchronize: true,
     logging: false,
     entities: [Device, User, Schedule, Power],
+    subscribers: [DeviceSubscriber]
 });

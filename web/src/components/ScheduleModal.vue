@@ -14,6 +14,9 @@
         <b-form-group label="Description:">
           <b-form-input type="text" placeholder="Description" v-model="description" />
         </b-form-group>
+        <b-form-group>
+          <b-form-select label="Devices" multiple v-model="selected" :options="options" />
+        </b-form-group>
         <b-form-group label="Begin Time:">
           <b-form-input type="time" placeholder="Begin Time" v-model="beginTime" />
         </b-form-group>
@@ -35,25 +38,33 @@ export default {
     id: null,
     name: '',
     description: '',
+    selected: [],
     beginTime: '',
     endTime: ''
   }),
   computed: {
     title() {
       return `${this.type.charAt(0).toUpperCase() + this.type.slice(1)} ${this.name || 'Schedule'}`;
-    }
+    },
+    ...mapState('devices', {
+      options: state => state.devices.map(device => ({
+        ...device,
+        status: false
+      }))
+    })
   },
   methods: {
     ...mapActions('schedule', ['create', 'edit', 'delete']),
+    ...mapActions('devices', ['fetchAll']),
     async handleSubmit (evt) {
       evt.preventDefault();
       // TODO Change name
       switch(this.type) {
         case 'add':
-          await this.create({name: this.name, description: this.description, devices: null, beginTime: this.beginTime, endTime: this.endTime});
+          await this.create({name: this.name, description: this.description, devices: this.selected, beginTime: this.beginTime, endTime: this.endTime});
           break;
         case 'edit':
-          await this.edit({ id: this.id, name: this.name, description: this.description, devices: null, beginTime: this.startTime, endTime: this.endTime });
+          await this.edit({ id: this.id, name: this.name, description: this.description, devices: this.selected, beginTime: this.startTime, endTime: this.endTime });
           break;
         case 'delete':
           await this.delete(this.id);
@@ -97,6 +108,9 @@ export default {
       this.endTime = schedule.endTime;
       this.$refs.modal.show();
     });
+  },
+  mounted(){
+    this.fetchAll();
   }
 };
 </script>
