@@ -1,21 +1,9 @@
 import Koa from 'koa';
 import Boom from 'boom';
 import { getRepository } from 'typeorm';
-import { Device } from '../entities';
+import { Device, DeviceType } from '../entities';
 
 export class DeviceController {
-
-    createDevice = async (ctx: Koa.BaseContext) => {
-        const {device} = ctx.request.body;
-        const deviceRepository = getRepository(Device);
-
-        deviceRepository.create(device);
-        ctx.status = 200;
-        ctx.body = {
-            status: 200,
-            message: 'ok'
-        }
-    }
 
     getDevices = async (ctx: Koa.BaseContext) => {
         const deviceRepository = getRepository(Device);
@@ -38,6 +26,23 @@ export class DeviceController {
 
         ctx.status = 200;
         ctx.body = device;
+    }
+
+    createDevice = async (ctx: Koa.BaseContext) => {
+        const { name, location } = ctx.request.body;
+        const deviceRepository = getRepository(Device);
+
+        if(!name || !location)
+            throw Boom.badRequest();
+
+        const device = await deviceRepository.create({ name, location, type: DeviceType.Switch }).save();
+
+        ctx.status = 200;
+        ctx.body = {
+            status: 200,
+            message: 'Device was successfully added',
+            device
+        }
     }
 
     editDevice = async (ctx: Koa.BaseContext) => {

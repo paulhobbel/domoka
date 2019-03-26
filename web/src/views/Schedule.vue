@@ -1,56 +1,70 @@
 <template>
   <div class="home">
     <b-card
-      title="Schedules"
       class="mb-4">
-       <b-table striped hover :items="items" :fields='fields'>
+      <b-card-title class="card-title-actions">
+        Schedules
+        <b-button-group size="sm">
+          <b-button variant="primary" @click="addItem">Add</b-button>
+          <b-button @click="fetchAll">Refresh</b-button>
+        </b-button-group>
+      </b-card-title>
+      <b-table striped hover :items="items" :fields='fields'>
         <template slot="status" slot-scope="row">
           <b-form-checkbox switch @change="toggleStatus(row, $event)" :checked="row.value">
           </b-form-checkbox>
         </template>
         <template slot="edit" slot-scope="row">
-           <b-button v-b-modal.modalGroup variant="primary">Edit</b-button >
-           <b-button @click="deleteItem(row, $event)" variant="danger">Delete</b-button>
+          <b-button-group size="sm">
+            <b-button variant="primary" @click="editItem(row)">Edit</b-button>
+            <b-button variant="danger" @click="deleteItem(row)">Delete</b-button>
+          </b-button-group>
         </template>
-       </b-table>
-
-      <b-button v-b-modal.modalSchedule variant="primary">Add</b-button>
+      </b-table>
     </b-card>
-    <app-edit-groups/>
-   <app-add-schedule/>
+    <schedule-modal ref="modal"/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import AppEditGroups from '@/components/AppEditGroups.vue';
-import AppAddSchedule from '@/components/AppAddSchedule.vue';
+import ScheduleModal from '@/components/ScheduleModal.vue';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   data: () => ({
-    fields: ['number', 'name', 'disciprtion', 'status', 'starttime', 'endtime', 'edit'],
-    items: [
-      { number: 1, name: 'wake-up bedroom', disciprtion: 'When I wake up thete is light', status: true, starttime: '06:32', endtime: '08:20' },
-      { number: 3, name: 'Light in evening', disciprtion: 'Sensor that looks if it is dark enough for the lights. and turns them on', status: true, starttime: '20:00', endtime: '02:00' }
-    ]
+    fields: ['id', 'name', 'description', 'status', 'beginTime', 'endTime', 'edit'],
+    // items: [
+    //   { number: 1, name: 'wake-up bedroom', disciprtion: 'When I wake up thete is light', status: true, starttime: '06:32', endtime: '08:20' },
+    //   { number: 3, name: 'Light in evening', disciprtion: 'Sensor that looks if it is dark enough for the lights. and turns them on', status: true, starttime: '20:00', endtime: '02:00' }
+    // ]
   }),
+  computed: {
+    ...mapState('schedule', {
+      items: state => state.schedules.map(schedule => ({
+        ...schedule,
+        status: false
+      }))
+    })
+  },
   methods: {
+    ...mapActions('schedule', ['fetchAll', 'create', 'edit', 'delete']),
     toggleStatus (row, flag) {
       this.items[row.index].status = flag;
     },
     deleteItem (row) {
-      this.items.splice(row.index, 1);
+      this.$refs.modal.$emit('delete', row.item);
+      // this.items.splice(row.index, 1);
     },
     editItem (row) {
-
+      this.$refs.modal.$emit('edit', row.item);
     },
     addItem () {
-
+      this.$refs.modal.$emit('add');
     }
   },
   components: {
-    AppEditGroups,
-    AppAddSchedule
+    ScheduleModal
   }
 };
 </script>

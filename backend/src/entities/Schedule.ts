@@ -1,8 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from "typeorm";
 import {Device} from "./Device";
 
 @Entity({ name: 'schedules' })
-export class Schedule {
+export class Schedule extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -12,11 +12,11 @@ export class Schedule {
     @Column({ nullable: true })
     description: string;
 
-    @Column()
-    beginTime: Date;
+    @Column({type: 'time'})
+    beginTime: string;
 
-    @Column()
-    endTime: Date;
+    @Column({type: 'time'})
+    endTime: string;
 
     @OneToMany(type => Device, device => device.schedule)
     devices: Device[];

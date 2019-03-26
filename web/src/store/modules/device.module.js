@@ -24,13 +24,16 @@ export default {
       state.devices.push(device);
     },
     EDIT (state, device) {
-      const foundDevice = state.devices.find(item => item.id == device.id);
+      const foundDevice = state.devices.find(item => item.id === device.id);
 
       foundDevice.name = device.name;
       foundDevice.location = device.location;
     },
-    REMOVE (state, device) {
-      state.devices.splice(state.devices.indexOf(device), 1);
+    DELETE (state, id) {
+      const index = state.devices.findIndex(item => item.id === id);
+      if (index !== -1) {
+        state.devices.splice(index, 1);
+      }
     }
   },
   actions: {
@@ -48,7 +51,7 @@ export default {
 
     async create ({ commit }, { name, location }) {
       try {
-        const device = await DeviceService.create({ name, location });
+        const { device } = await DeviceService.create({ name, location });
 
         commit('ADD', device);
       } catch (err) {
@@ -73,11 +76,11 @@ export default {
       }
     },
 
-    async delete ({ commit }, device) {
+    async delete ({ commit }, id) {
       try {
-        await DeviceService.delete(device.id);
+        await DeviceService.delete(id);
 
-        commit('REMOVE', device);
+        commit('DELETE', id);
       } catch (err) {
         console.log(err);
         commit('FAILED', err.message);

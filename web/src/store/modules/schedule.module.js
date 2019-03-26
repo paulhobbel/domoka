@@ -21,61 +21,69 @@ export default {
       state.error = message;
     },
     ADD (state, schedule) {
-      state.schedule.push(schedule);
+      state.schedules.push(schedule);
     },
-    EDIT (state, { schedule, name = schedule.name, description = schedule.description, beginTime = schedule.beginTime, endTime = schedule.endTime, devices }) {
-      schedule.name = name;
-      schedule.description = description;
-      schedule.beginTime = beginTime;
-      schedule.endTime = endTime;
-      schedule.devices = devices;
+    EDIT (state, schedule) {
+      const found = state.schedules.find(item => item.id === schedule.id);
+      found.name = schedule.name;
+      found.description = schedule.description;
+      found.beginTime = schedule.beginTime;
+      found.endTime = schedule.endTime;
+      found.devices = schedule.devices || [];
     },
-    REMOVE (state, schedule) {
-      state.schedules.splice(state.schedules.indexOf(schedule), 1);
+    REMOVE (state, id) {
+      const index = state.schedules.findIndex(item => item.id === id);
+      if (index !== -1) {
+        state.schedules.splice(index, 1);
+      }
     }
   },
   actions: {
-    async fetchALl ({ commit }) {
+    async fetchAll ({ commit }) {
       commit('REQUEST');
 
       try {
         const { result } = await ScheduleService.getschedules();
         commit('SUCCESS', result);
       } catch (err) {
-        console.log(err);
-        // commit('FAILED', err.response.data.message);
-      }
-    },
-    async edit ({ commit }, { name, description, devices, beginTime, endTime }) {
-      try {
-        const schedule = await ScheduleService.create({ name, description, devices, beginTime, endTime });
-
-        commit('ADD', schedule);
-      } catch (err) {
-        commit('FAILED', err.message);
-        // console.log(err);
-        // commit('FAILED', err.response.data.message);
-      }
-    },
-    async delete ({ commit }, schedule) {
-      commit('REQUEST');
-
-      try {
-        await ScheduleService.deleteSchedule(schedule.id);
-        commit('REMOVE', schedule);
-      } catch (err) {
-        console.log(err);
+        commit('FAILED', err);
+        throw err;
         // commit('FAILED', err.response.data.message);
       }
     },
     async create ({ commit }, { name, description, devices, beginTime, endTime }) {
       try {
-        const schedule = await ScheduleService.create({ name, description, devices, beginTime, endTime });
+        const { schedule } = await ScheduleService.create({ name, description, devices, beginTime, endTime });
 
         commit('ADD', schedule);
       } catch (err) {
         commit('FAILED', err.message);
+        throw err;
         // console.log(err);
+        // commit('FAILED', err.response.data.message);
+      }
+    },
+    async edit ({ commit }, { id, name, description, devices, beginTime, endTime }) {
+      try {
+        const { schedule } = await ScheduleService.edit({ id, name, description, devices, beginTime, endTime });
+
+        commit('EDIT', schedule);
+      } catch (err) {
+        commit('FAILED', err.message);
+        throw err;
+        // console.log(err);
+        // commit('FAILED', err.response.data.message);
+      }
+    },
+    async delete ({ commit }, id) {
+      commit('REQUEST');
+
+      try {
+        await ScheduleService.deleteSchedule(id);
+        commit('REMOVE', id);
+      } catch (err) {
+        console.log(err);
+        throw err;
         // commit('FAILED', err.response.data.message);
       }
     },

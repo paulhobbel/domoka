@@ -1,31 +1,40 @@
 <template>
   <div class="home">
     <b-card
-      title="Devices"
       class="mb-4">
-
+      <b-card-title class="card-title-actions">
+        Devices
+        <!-- <b-button-toolbar aria-label="Toolbar with button groups and input groups"> -->
+          <b-button-group size="sm">
+            <b-button variant="primary" @click="addItem">Add</b-button>
+            <b-button @click="fetchAll">Refresh</b-button>
+          </b-button-group>
+        <!-- </b-button-toolbar> -->
+        <!-- <b-button @click="addItem" variant="primary">Add</b-button> -->
+      </b-card-title>
       <b-table striped hover :items="items" :fields='fields'>
         <template slot="status" slot-scope="row">
           <b-form-checkbox switch @change="toggleStatus(row, $event)" :checked="row.value">
           </b-form-checkbox>
         </template>
         <template slot="edit" slot-scope="row">
-           <b-button @click="editItem(row)" variant="primary">Edit</b-button >
-           <b-button @click="deleteItem(row, $event)" variant="danger">Delete</b-button>
+          <b-button-group size="sm">
+            <b-button variant="primary" @click="editItem(row)">Edit</b-button>
+            <b-button variant="danger" @click="deleteItem(row)">Delete</b-button>
+          </b-button-group>
+           <!-- <b-button @click="editItem(row)" variant="primary" size="sm">Edit</b-button >
+           <b-button @click="deleteItem(row, $event)" variant="danger" size="sm">Delete</b-button> -->
         </template>
       </b-table>
-      <b-button v-b-modal.modalAdd variant="primary">Add</b-button>
     </b-card>
 
-    <device-edit-modal ref="editModal"/>
-    <app-add-pop-up/>
+    <device-modal ref="modal"/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import DeviceEditModal from '@/components/DeviceEditModal.vue';
-import AppAddPopUp from '@/components/AppAddPopUp.vue';
+import DeviceModal from '@/components/DeviceModal.vue';
 import { mapState, mapActions } from 'vuex';
 
 export default {
@@ -51,13 +60,13 @@ export default {
       this.items[row.index].status = flag;
     },
     deleteItem (row) {
-      this.items.splice(row.index, 1);
+      this.$refs.modal.$emit('delete', row.item);
     },
     editItem (row) {
-      this.$refs.editModal.$emit('editDevice', row.item);
+      this.$refs.modal.$emit('edit', row.item);
     },
     addItem () {
-
+      this.$refs.modal.$emit('add');
     },
     ...mapActions('devices', ['fetchAll'])
   },
@@ -65,8 +74,15 @@ export default {
     this.fetchAll();
   },
   components: {
-    DeviceEditModal,
-    AppAddPopUp
+    DeviceModal
   }
 };
 </script>
+
+<style>
+.card-title-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+</style>

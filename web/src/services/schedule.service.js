@@ -1,7 +1,21 @@
 import ApiService from './api.service';
 
 export default {
-  async editSchedule (id, schedule) {
+  async fetchAll () {
+    const res = await ApiService().get('/schedules');
+
+    return res.data;
+  },
+
+  async create ({ name, description, status, beginTime, endTime }) {
+    const res = await ApiService().post('/schedules', {
+      name, description, status, beginTime, endTime
+    });
+
+    return res.data;
+  },
+
+  async edit ({ id, ...schedule }) {
     const res = await ApiService().patch(`/schedules/${id}`, {
       schedule
     });
@@ -9,28 +23,14 @@ export default {
     return res.data;
   },
 
-  async getschedules () {
-    const res = await ApiService().get('/schedules');
+  async delete (id) {
+    const res = await ApiService().delete(`/schedules/${id}`);
 
     return res.data;
   },
 
   async getschedule (id) {
     const res = await ApiService().get(`/schedules/${id}`);
-
-    return res.data;
-  },
-
-  async createSchedule (schedule) {
-    const res = await ApiService().post('/schedules', {
-      schedule
-    });
-
-    return res.data;
-  },
-
-  async deleteSchedule (id) {
-    const res = await ApiService().delete(`/schedules/${id}`);
 
     return res.data;
   }

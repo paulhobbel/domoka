@@ -5,18 +5,6 @@ import { Schedule } from '../entities/Schedule';
 
 export class ScheduleController {
 
-    createSchedule = async (ctx: Koa.BaseContext) => {
-        const {schedule} = ctx.request.body;
-        const scheduleRepository = getRepository(Schedule);
-
-        scheduleRepository.create(schedule);
-        ctx.status = 200;
-        ctx.body = {
-            status: 200,
-            message: 'ok'
-        }
-    }
-
     getSchedules = async (ctx: Koa.BaseContext) => {
         const scheduleRepositiry = getRepository(Schedule);
 
@@ -38,6 +26,22 @@ export class ScheduleController {
 
         ctx.status = 200;
         ctx.body = schedule;
+    }
+
+    createSchedule = async (ctx: Koa.BaseContext) => {
+        const { name, description, devices, beginTime, endTime } = ctx.request.body;
+        const scheduleRepository = getRepository(Schedule);
+
+        const created = await scheduleRepository
+            .create({ name, description, devices, beginTime, endTime })
+            .save();
+        
+        ctx.status = 200;
+        ctx.body = {
+            status: 200,
+            message: 'Schedule created successfully',
+            schedule: created
+        }
     }
 
     editSchedule = async (ctx: Koa.BaseContext) => {
