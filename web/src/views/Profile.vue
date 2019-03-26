@@ -3,65 +3,59 @@
     <b-container fluid>
       <b-alert :show="!!error" variant="danger">{{ error }}</b-alert>
         <b-row>
-          <b-card title="Current Profile" class="text-left">
-            Username: {{ username }}
-          </b-card>
-
-        <b-col>
-          <b-card title="Edit Profile" class="text-left">
-            <b-form @submit="onSubmit" @reset.prevent="onReset" v-if="show">
-              <b-row>
-                <b-col>
-                  <b-form-group
-                    id="testGroup1"
-                    label="Username"
-                    label-for="exampleInput1"
-                  >
-                    <b-form-input
-                      id="exampleInput1"
-                      type="text"
-                      v-model="form.username"
-                      required
-                      placeholder="New username"
-                    />
-                  </b-form-group>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col>
-                  <b-form-group
-                    id="testGroup2"
-                    label="Password"
-                    label-for="exampleInput2"
-                  >
-                    <b-form-input
-                      id="exampleInput2"
-                      type="password"
-                      v-model="form.oldpassword"
-                      placeholder="Current password"
-                    />
-                  </b-form-group>
-                </b-col>
-                <b-col>
-                  <b-form-group
-                    id="testGroup3"
-                    label="Password"
-                    label-for="exampleInput3"
-                  >
-                    <b-form-input
-                      id="exampleInput3"
-                      type="password"
-                      v-model="form.newpassword"
-                      placeholder="New password"
-                    />
-                  </b-form-group>
-                </b-col>
-              </b-row>
-              <b-button type="submit" variant="primary" with>Submit</b-button>
-              <b-button type="reset" variant="danger">Reset</b-button>
-            </b-form>
-          </b-card>
-        </b-col>
+          <b-col md="3" sm="12" class="mb-4">
+            <b-card title="Current Profile" class="text-left profile-card">
+              Username: {{ username }}
+            </b-card>
+          </b-col>
+          <b-col>
+            <b-card title="Edit Profile" class="text-left">
+              <b-form @submit="onSubmit" @reset.prevent="onReset" v-if="show">
+                <b-form-group
+                  label="Username"
+                  label-for="username"
+                >
+                  <b-form-input
+                    id="username"
+                    type="text"
+                    v-model="form.username"
+                    required
+                    placeholder="New username"
+                  />
+                </b-form-group>
+                <b-row>
+                  <b-col>
+                    <b-form-group
+                      label="Current Password"
+                      label-for="password"
+                    >
+                      <b-form-input
+                        id="password"
+                        type="password"
+                        v-model="form.oldpassword"
+                        placeholder="Current password"
+                      />
+                    </b-form-group>
+                  </b-col>
+                  <b-col>
+                    <b-form-group
+                      label="New Password"
+                      label-for="newPassword"
+                    >
+                      <b-form-input
+                        id="newPassword"
+                        type="password"
+                        v-model="form.newpassword"
+                        placeholder="New password"
+                      />
+                    </b-form-group>
+                  </b-col>
+                </b-row>
+                <b-button type="submit" variant="primary" class="mr-2">Submit</b-button>
+                <b-button type="reset" variant="danger">Reset</b-button>
+              </b-form>
+            </b-card>
+          </b-col>
         </b-row>
     </b-container>
   </div>
@@ -105,3 +99,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.profile-card {
+  height: 100%;
+}
+</style>
