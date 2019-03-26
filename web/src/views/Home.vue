@@ -29,6 +29,10 @@
         </b-card-text>
 
         <b-card-text>
+           Power used total: 10 kwh
+        </b-card-text>
+
+        <b-card-text>
            Power saved: 10 kwh
         </b-card-text>
 

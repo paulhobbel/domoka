@@ -20,6 +20,7 @@ export class PowerController {
         const powerRepositiry = getRepository(Power);
         const power = {
             "powerUsed": 0,
+            "powerUsage": 0,
             "moneyCost": 0,
             "powerSavings": 0,
             "moneySavings": 0

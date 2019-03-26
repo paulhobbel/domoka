@@ -5,6 +5,8 @@ export class PowerAlgorithm {
   private readonly cost = 0.0002292;
   totalWatt = 0;
   totalCost = 0;
+  totalMoneySaved = 0;
+  totalPowerSaved = 0;
 
     async calc () {
       const res = getRepository(Device);
@@ -19,5 +21,9 @@ export class PowerAlgorithm {
 
       this.totalCost += this.cost * 1/60 * tempWatt;
       this.totalWatt += tempWatt;
+    }
+
+    async calcSavings () {
+      
     }
 };
