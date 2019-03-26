@@ -25,15 +25,15 @@
       img widht= 148
       title="Power overview">
         <b-card-text>
-          Power usage: 20 kwh
+          Power usage: {{ powerUsage }}
         </b-card-text>
 
         <b-card-text>
-           Power used total: 10 kwh
+           Power used total: {{ powerUsed }}
         </b-card-text>
 
         <b-card-text>
-           Power saved: 10 kwh
+           Power savings: {{ powerSavings }}
         </b-card-text>
 
       </b-card>
@@ -61,16 +61,18 @@
 
 <script>
 // @ is an alias to /src
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
   data: () => ({
     fieldsSchedule: ['name', 'description'],
     fieldsDevices: ['name', 'location']
+
   }),
   computed: {
     ...mapGetters('devices', ['activeDevices']),
     ...mapGetters('schedule', ['activeSchedules']),
+    ...mapState('power', ['powerUsage','powerUsed', 'powerSavings'])
   },
   methods: {
     ...mapActions('devices', {
@@ -79,10 +81,12 @@ export default {
     ...mapActions('schedule', {
       fetchSchedules: 'fetchAll'
     }),
+    ...mapActions('power', ['getPower'])
   },
   mounted () {
     this.fetchDevices();
     this.fetchSchedules();
+    this.getPower();
   }
 };
 </script>

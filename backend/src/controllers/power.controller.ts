@@ -8,7 +8,7 @@ export class PowerController {
     getPower = async (ctx: Koa.BaseContext) => {
         const powerRepositiry = getRepository(Power);
 
-        const power = await powerRepositiry.find();
+        const power = await powerRepositiry.findOne();
         
         ctx.status = 200;
         ctx.body = {
