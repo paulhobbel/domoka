@@ -7,6 +7,9 @@ class WorkerClient {
         console.log(ip);
     }
 
+    /**
+     * Connects with the mqtt server
+     */
     async connect() {
         return new Promise((resolve, reject) => {
             this.client = Mqtt.connect(`mqtt://${this.ip}`);
@@ -16,15 +19,12 @@ class WorkerClient {
         });
     }
 
-    async turnOn(id: number) {
-        return await this.sendManipulation(id, true);
-    }
-
-    async turnOff(id: number) {
-        return await this.sendManipulation(id, false);
-    }
-
-    private sendManipulation(id: number, turnOn: boolean) {
+    /**
+     * Sends a device status to the worker
+     * @param id The device id
+     * @param turnOn Whether the device should turn on
+     */
+    sendDeviceStatus(id: number, turnOn: boolean) {
         return new Promise((resolve, reject) => {
             this.client.publish('manipulation', JSON.stringify({
                 id,

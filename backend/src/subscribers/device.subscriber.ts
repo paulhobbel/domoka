@@ -8,19 +8,13 @@ export class DeviceSubscriber implements EntitySubscriberInterface<Device> {
         return Device;
     }
 
-    afterLoad() {
-        console.log('[DeviceSubscriber]: Loaded')
-    }
-
     afterInsert(event: InsertEvent<Device>) {
         console.log('[DeviceSubscriber]: Device Inserted');
+        Worker.sendDeviceStatus(event.entity.id, event.entity.status);
     }
 
     afterUpdate(event: UpdateEvent<Device>) {
         console.log('[DeviceSubscriber]: Device Updated');
-        if(event.entity.status)
-            Worker.turnOn(event.entity.id);
-        else
-            Worker.turnOff(event.entity.id);
+        Worker.sendDeviceStatus(event.entity.id, event.entity.status);
     }
 }
