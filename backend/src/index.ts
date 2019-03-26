@@ -24,6 +24,7 @@ import Algorithm from './algorithms/power.algorithm';
     app.use(KoaBodyParser());
     app.use(AppRouter.routes());
     startAlgorithms (Algorithm);
+    
 
     app.listen(3000, () => {
         console.log('[App]: Server listening at port 3000');

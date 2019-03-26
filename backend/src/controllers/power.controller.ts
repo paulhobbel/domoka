@@ -9,6 +9,8 @@ export class PowerController {
         const powerRepositiry = getRepository(Power);
 
         const power = await powerRepositiry.find();
+        if(!power)
+        throw Boom.badRequest();
         
         ctx.status = 200;
         ctx.body = {

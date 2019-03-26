@@ -13,8 +13,8 @@ export class PowerAlgorithm {
 
     async calcTotal () {
       const res = getRepository(Device);
-      const p = getRepository(Power);
-      const power = await p.findOne();
+      const powerRepositiry = getRepository(Power);
+      const power = await powerRepositiry.findOne();
       if(!power)
         throw Boom.badRequest();
       
@@ -45,6 +45,8 @@ export class PowerAlgorithm {
       this.totalPowerSaved += this.lastWatt/this.getRandomArbitrary(90, 120);
       power.moneySavings = this.totalPowerSaved * this.cost;
       this.totalMoneySaved = this.totalPowerSaved*this.cost;
+
+      await power.save();
     }
 
     getRandomArbitrary(min:number, max:number) {
