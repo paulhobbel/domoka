@@ -2,7 +2,7 @@ import { Controller } from './controller';
 
 console.log('[src/mqtt/index] Hello world!\n');
 
-let ip: string = '145.48.205.24'; //Raspberry PI ip
+let ip: string = '192.168.1.200'; //Raspberry PI ip
 // let ip: string = 'test.mosquitto.org:1883'; //Test ip
 let deviceName: string = 'kaku';
 
