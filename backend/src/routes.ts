@@ -18,9 +18,9 @@ router.patch('/schedules/:id', JwtMiddleware, controllers.schedule.editSchedule)
 router.post('/schedules', JwtMiddleware, controllers.schedule.createSchedule);
 
 router.get('/users/@me', JwtMiddleware, controllers.user.getMe);
+router.patch('/users/@me', JwtMiddleware, controllers.user.updateMe);
 
 router.post('/auth/login', controllers.auth.postLogin);
 router.post('/auth/register', controllers.auth.postRegister);
-
 
 export default router;
