@@ -9,7 +9,7 @@ class PowerAlgorithm {
   totalPowerSaved = 0;
   lastWatt = 0;
 
-    async calc () {
+    async calcTotal () {
       const res = getRepository(Device);
       let tempWatt = 0;
       const objs = await res.find();

@@ -9,7 +9,7 @@ import * as Database from './database';
 import { ErrorMiddleware } from './middleware';
 import Worker from './worker';
 
-const Algorithm = require('./algorithms/power.algorithm');
+import Algorithm from './algorithms/power.algorithm';
 
 (async () => {
     await Database.connect();
@@ -36,7 +36,7 @@ process.on('unhandledRejection', err => {
 
 function startAlgorithms (Algorithm: any) {
     setInterval(async () => {
-        Algorithm.calc();
+        Algorithm.calcTotal();
         Algorithm.calcSavings();
     
     }, 60000);
