@@ -13,14 +13,18 @@
            <b-button @click="deleteItem(row, $event)" variant="danger">Delete</b-button>
         </template>
        </b-table>
-      <app-edit-groups/>
+
+      <b-button v-b-modal.modalSchedule variant="primary">Add</b-button>
     </b-card>
+    <app-edit-groups/>
+   <app-add-schedule/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import AppEditGroups from '@/components/AppEditGroups.vue';
+import AppAddSchedule from '@/components/AppAddSchedule.vue';
 
 export default {
   data: () => ({
@@ -45,7 +49,8 @@ export default {
     }
   },
   components: {
-    AppEditGroups
+    AppEditGroups,
+    AppAddSchedule
   }
 };
 </script>

@@ -15,7 +15,10 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 export default {
+
   data () {
     return {
       name: '',
@@ -23,6 +26,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions('devices', ['create']),
     clearFields () {
       this.name = '';
       this.location = '';
@@ -36,8 +40,7 @@ export default {
       };
     },
     handleSubmit () {
-      // TODO Change name
-
+      this.create({name: this.name, location: this.location});
       this.clearFields();
       this.$nextTick(() => {
         // Wrapped in $nextTick to ensure DOM is rendered before closing
