@@ -36,6 +36,8 @@ export class UserController {
       
       if(oldPassword && newPassword) {
         if (await AuthController.validatePassword(user.password, oldPassword)) {
+          if (await AuthController.validatePassword(user.password, newPassword))
+            throw Boom.badRequest("New password can not be the same as old password");
           user.password = await AuthController.generateHash(newPassword);
         } else {
           throw Boom.badRequest("Password did not match current password");
