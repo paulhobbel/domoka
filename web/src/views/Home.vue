@@ -1,12 +1,31 @@
 <template>
   <div class="home">
-    <b-card
-      title="Devices"
-      class="mb-4">
+    <b-card-group deck>
+      <b-card
+        title="Devices Overview"
+        class="mb-4">
+        <b-table striped hover :fields="fieldsDevices" :items="deviceItems">
+          <template slot="status" slot-scope="row">
+            <b-form-checkbox switch @change="toggleStatus(row, $event)" :checked="row.value">
+            </b-form-checkbox>
+          </template>
+        </b-table>
 
-      <app-table/>
+      </b-card>
 
-    </b-card>
+      <b-card
+        title="Schedules Overview"
+        class="mb-4">
+
+        <b-table striped hover :fields="fieldsSchedule" :items="scheduleItems">
+          <template slot="status" slot-scope="row">
+            <b-form-checkbox switch @change="toggleStatus(row, $event)" :checked="row.value">
+            </b-form-checkbox>
+          </template>
+        </b-table>
+
+      </b-card>
+    </b-card-group>
 
     <b-card
     title="Savings"
@@ -51,11 +70,24 @@
 
 <script>
 // @ is an alias to /src
-import AppTable from '@/components/AppTable.vue';
+import { mapActions, mapGetters } from 'vuex';
+import ScheduleModal from '@/components/ScheduleModal.vue';
+import DeviceModal from '@/components/DeviceModal.vue';
 
 export default {
+  data: () => ({
+    fieldsSchedule: ['name', 'description'],
+    fieldsDevices: ['name', 'location']
+  }),
+  computed: {
+    ...mapGetters('schedule', 'device', {
+      deviceItems: 'schedule',
+      scheduleItems: 'device'
+    })
+  },
   components: {
-    AppTable
+    ScheduleModal,
+    DeviceModal
   }
 };
 </script>
