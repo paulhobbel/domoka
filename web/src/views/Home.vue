@@ -4,18 +4,13 @@
       <b-card
         title="Devices Overview"
         class="mb-4">
-        <b-table striped hover :fields="fieldsDevices" :items="deviceItems">
-        </b-table>
-
+        <b-table striped :fields="fieldsDevices" :items="activeDevices"/>
       </b-card>
 
       <b-card
         title="Schedules Overview"
         class="mb-4">
-
-        <b-table striped hover :fields="fieldsSchedule" :items="scheduleItems">
-        </b-table>
-
+        <b-table striped :fields="fieldsSchedule" :items="activeSchedules"/>
       </b-card>
     </b-card-group>
 
@@ -63,8 +58,6 @@
 <script>
 // @ is an alias to /src
 import { mapActions, mapGetters } from 'vuex';
-import ScheduleModal from '@/components/ScheduleModal.vue';
-import DeviceModal from '@/components/DeviceModal.vue';
 
 export default {
   data: () => ({
@@ -72,20 +65,20 @@ export default {
     fieldsDevices: ['name', 'location']
   }),
   computed: {
-    ...mapGetters('schedule', {
-      deviceItems: 'schedule'
+    ...mapGetters('devices', ['activeDevices']),
+    ...mapGetters('schedule', ['activeSchedules']),
+  },
+  methods: {
+    ...mapActions('devices', {
+      fetchDevices: 'fetchAll'
     }),
-    ...mapGetters('device', {
-      scheduleItems: 'device'
-    })
+    ...mapActions('schedule', {
+      fetchSchedules: 'fetchAll'
+    }),
   },
-  getters: {
-    ...mapActions('schedule', ['activeSchedules']),
-    ...mapActions('device', ['activeDevices']),
-  },
-  components: {
-    ScheduleModal,
-    DeviceModal
+  mounted () {
+    this.fetchDevices();
+    this.fetchSchedules();
   }
 };
 </script>
