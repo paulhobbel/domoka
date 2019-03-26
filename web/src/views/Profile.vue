@@ -69,19 +69,17 @@
 
 <script>
 
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
-  data() {
-    return {
-      form: {
-        username: '',
-        oldpassword: '',
-        newpassword: ''
-      },
-      show: true
-    };
-  },
+  data: () => ({
+    form: {
+      username: '',
+      oldpassword: '',
+      newpassword: ''
+    },
+    show: true
+  }),
   computed: {
     ...mapState('auth', ['username', 'error'])
   },
@@ -89,12 +87,11 @@ export default {
     ...mapActions('auth', ['changeName']),
     onSubmit (evt) {
       evt.preventDefault();
-      this.changeName({ username: this.form.username, oldPassword: this.form.oldpassword, newPassword: this.form.newpassword});
+      this.changeName({ username: this.form.username, oldPassword: this.form.oldpassword, newPassword: this.form.newpassword });
       evt.preventDefault();
       this.onReset();
     },
     onReset () {
-      //this.form.username = '';
       this.form.oldpassword = '';
       this.form.newpassword = '';
       this.show = false;
@@ -103,8 +100,8 @@ export default {
       });
     }
   },
-  mounted() {
+  mounted () {
     this.form.username = this.username;
-  },
+  }
 };
 </script>

@@ -7,10 +7,16 @@ export default {
     return res.data;
   },
 
-  async create ({ name, description, status, beginTime, endTime }) {
+  async create ({ name, description, status, beginTime, endTime, devices }) {
     const res = await ApiService().post('/schedules', {
-      name, description, status, beginTime, endTime
+      name, description, status, beginTime, endTime, devices
     });
+
+    return res.data;
+  },
+
+  async toggle (id) {
+    const res = await ApiService().post(`/schedules/${id}/toggle`);
 
     return res.data;
   },

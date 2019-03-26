@@ -39,6 +39,9 @@ export default {
       }
     }
   },
+  getters: {
+    activeSchedules: state => state.schedules.filter(schedule => schedule.status)
+  },
   actions: {
     async fetchAll ({ commit }) {
       commit('REQUEST');
@@ -76,6 +79,18 @@ export default {
         // commit('FAILED', err.response.data.message);
       }
     },
+
+    async toggle ({ commit }, id) {
+      try {
+        const { schedule } = await ScheduleService.toggle(id);
+
+        commit('EDIT', schedule);
+      } catch (err) {
+        commit('FAILED', err.message);
+        throw err;
+      }
+    },
+
     async delete ({ commit }, id) {
       commit('REQUEST');
 

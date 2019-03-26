@@ -23,9 +23,6 @@ export class Device extends BaseEntity {
     @Column({ default: true })
     status: boolean;
 
-    @ManyToOne(type => Schedule, schedule => schedule.devices, { nullable: true })
-    schedule: Schedule;
-
     @Column({ nullable: true})
     watt: number;
 }

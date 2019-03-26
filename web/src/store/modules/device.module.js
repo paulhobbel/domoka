@@ -36,6 +36,9 @@ export default {
       }
     }
   },
+  getters: {
+    activeDevices: state => state.devices.filter(device => device.status)
+  },
   actions: {
     async fetchAll ({ commit }) {
       commit('REQUEST');
@@ -44,14 +47,14 @@ export default {
         const { result } = await DeviceService.fetchAll();
         commit('SUCCESS', result);
       } catch (err) {
-        console.log(err);
-        commit('FAILED', err.response.data.message);
+        commit('FAILED', err.message);
+        throw err;
       }
     },
 
-    async create ({ commit }, { deviceId, name, location }) {
+    async create ({ commit }, { deviceId, name, location, watt }) {
       try {
-        const { device } = await DeviceService.create({ deviceId, name, location });
+        const { device } = await DeviceService.create({ deviceId, name, location, watt });
 
         commit('ADD', device);
       } catch (err) {
@@ -59,16 +62,15 @@ export default {
       }
     },
 
-    async edit ({ commit }, { id, deviceId, name, location }) {
+    async edit ({ commit }, { id, deviceId, name, location, watt }) {
       try {
         const { device } = await DeviceService.edit({
           id,
           deviceId,
           name,
-          location
+          location,
+          watt
         });
-
-        console.log(device);
 
         commit('EDIT', device);
       } catch (err) {
@@ -94,8 +96,8 @@ export default {
 
         commit('DELETE', id);
       } catch (err) {
-        console.log(err);
         commit('FAILED', err.message);
+        throw err;
       }
     }
   }
