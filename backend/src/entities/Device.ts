@@ -26,6 +26,9 @@ export class Device extends BaseEntity {
     @Column()
     type: DeviceType;
 
+    @Column({ nullable: true})
+    watt: number;
+
     @Column({ default: false })
     status: boolean;
 }

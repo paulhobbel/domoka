@@ -46,7 +46,7 @@ export class DeviceController {
     }
 
     editDevice = async (ctx: Koa.BaseContext) => {
-        const { name, description, location, type } = ctx.request.body;
+        const { name, description, location, type, watt } = ctx.request.body;
         const deviceRepository = getRepository(Device);
 
         let device = await deviceRepository.findOne(+ctx.params.id);
@@ -57,6 +57,7 @@ export class DeviceController {
         device.description = description || device.description;
         device.location = location || device.location;
         device.type = type || device.type;
+        device.watt = watt || device.watt;
 
         const updated = await device.save();
 

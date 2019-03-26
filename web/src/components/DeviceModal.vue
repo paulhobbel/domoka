@@ -30,7 +30,8 @@ export default {
     type: 'add',
     id: null,
     name: null,
-    location: null
+    location: null,
+    watt: null
   }),
   computed: {
     title() {
@@ -47,7 +48,7 @@ export default {
             await this.create({ name: this.name, location: this.location });
             break;
           case 'edit':
-            await this.edit({ id: this.id, name: this.name, location: this.location });
+            await this.edit({ id: this.id, name: this.name, location: this.location, watt: this.watt });
             break;
           case 'delete':
             await this.delete(this.id);
@@ -70,6 +71,7 @@ export default {
       this.id = null;
       this.name = null;
       this.location = null;
+      this.watt = null;
       this.$refs.modal.show();
     });
 
@@ -78,6 +80,7 @@ export default {
       this.id = device.id;
       this.name = device.name;
       this.location = device.location;
+      this.watt = device.watt;
       this.$refs.modal.show();
     });
 
@@ -86,6 +89,7 @@ export default {
       this.id = device.id;
       this.name = device.name;
       this.location = device.location;
+      this.watt = device.watt;
       this.$refs.modal.show();
     });
   }
