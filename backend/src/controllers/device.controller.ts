@@ -76,7 +76,7 @@ export class DeviceController {
         if(!device)
             throw Boom.notFound('Device with given id not found');
 
-        device.status != device.status;
+        device.status = !device.status;
 
         const updated = await device.save();
 

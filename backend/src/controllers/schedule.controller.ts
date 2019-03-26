@@ -68,6 +68,25 @@ export class ScheduleController {
         };
     }
 
+    toggleSchedule = async (ctx: Koa.BaseContext) => {
+        const scheduleRepositiry = getRepository(Schedule)
+
+        let schedule = await scheduleRepositiry.findOne(+ctx.params.id);
+
+        if(!schedule)
+            throw Boom.notFound('Schedule with given id not found');
+
+        schedule.status = !schedule.status;
+
+        const updated = await schedule.save();
+
+        ctx.body = {
+            statusCode: 200,
+            message: 'Toggeled the item from schedules',
+            schedule: updated
+        };
+    }
+
     deleteSchedule = async (ctx: Koa.BaseContext) => {
         const scheduleRepositiry = getRepository(Schedule);
 

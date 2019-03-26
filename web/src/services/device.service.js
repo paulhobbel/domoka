@@ -14,7 +14,7 @@ export default {
   },
 
   async toggle (id) {
-    const res = await ApiService().post(`/devices/${id}`);
+    const res = await ApiService().post(`/devices/${id}/toggle`);
 
     return res.data;
   },

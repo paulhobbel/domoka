@@ -33,7 +33,7 @@ import DeviceModal from '@/components/DeviceModal.vue';
 
 export default {
   data: () => ({
-    fields: [{ key: 'deviceId', label: 'ID' }, 'name', 'location', 'status', 'watt', 'edit']
+    fields: [{ key: 'deviceId', label: 'ID' }, 'name', 'location', 'watt', 'status', 'edit']
   }),
   computed: {
     ...mapState('devices', {

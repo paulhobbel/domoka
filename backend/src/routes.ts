@@ -8,7 +8,7 @@ router.get('/', controllers.misc.getStatus);
 
 router.get('/devices', JwtMiddleware, controllers.device.getDevices);
 router.post('/devices', JwtMiddleware, controllers.device.createDevice);
-router.post('/devices/:id', JwtMiddleware, controllers.device.toggleDevice);
+router.post('/devices/:id/toggle', JwtMiddleware, controllers.device.toggleDevice);
 router.get('/devices/:id', JwtMiddleware, controllers.device.getDevice);
 router.patch('/devices/:id', JwtMiddleware, controllers.device.editDevice);
 router.delete('/devices/:id', JwtMiddleware, controllers.device.deleteDevice);
@@ -16,6 +16,7 @@ router.delete('/devices/:id', JwtMiddleware, controllers.device.deleteDevice);
 router.get('/schedules', JwtMiddleware, controllers.schedule.getSchedules);
 router.post('/schedules', JwtMiddleware, controllers.schedule.createSchedule);
 router.get('/schedules/:id', JwtMiddleware, controllers.schedule.getSchedule);
+router.post('/schedules/:id/toggle', JwtMiddleware, controllers.schedule.toggleSchedule);
 router.patch('/schedules/:id', JwtMiddleware, controllers.schedule.editSchedule);
 router.delete('/schedules/:id', JwtMiddleware, controllers.schedule.deleteSchedule);
 

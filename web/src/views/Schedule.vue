@@ -32,24 +32,20 @@ import ScheduleModal from '@/components/ScheduleModal.vue';
 
 export default {
   data: () => ({
-    fields: [{ key: 'id', label: 'ID' }, 'name', 'description', 'status', 'beginTime', 'endTime', 'edit']
+    fields: [{ key: 'id', label: 'ID' }, 'name', 'description', 'beginTime', 'endTime', 'status', 'edit']
   }),
   computed: {
     ...mapState('schedule', {
-      items: state => state.schedules.map(schedule => ({
-        ...schedule,
-        status: false
-      }))
+      items: state => state.schedules
     })
   },
   methods: {
-    ...mapActions('schedule', ['fetchAll', 'create', 'edit', 'delete']),
-    toggleStatus (row, flag) {
-      this.items[row.index].status = flag;
+    ...mapActions('schedule', ['fetchAll', 'create', 'edit', 'delete', 'toggle']),
+    async toggleStatus (row, flag) {
+      await this.toggle(row.item.id);
     },
     deleteItem (row) {
       this.$refs.modal.$emit('delete', row.item);
-      // this.items.splice(row.index, 1);
     },
     editItem (row) {
       this.$refs.modal.$emit('edit', row.item);

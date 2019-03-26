@@ -15,6 +15,12 @@ export default {
     return res.data;
   },
 
+  async toggle (id) {
+    const res = await ApiService().post(`/schedules/${id}/toggle`);
+
+    return res.data;
+  },
+
   async edit ({ id, ...schedule }) {
     const res = await ApiService().patch(`/schedules/${id}`, schedule);
 

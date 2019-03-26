@@ -18,6 +18,9 @@ export class Schedule extends BaseEntity {
     @Column({type: 'time'})
     endTime: string;
 
+    @Column({ default: true })
+    status: boolean;
+
     @ManyToMany(type => Device)
     @JoinTable()
     devices: Device[];
