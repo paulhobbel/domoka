@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-container fluid>
-
+      <b-alert :show="!!error" variant="danger">{{ error }}</b-alert>
         <b-row>
           <b-card title="Current Profile" class="text-left">
             Username: {{ username }}
@@ -9,7 +9,7 @@
 
         <b-col>
           <b-card title="Edit Profile" class="text-left">
-            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+            <b-form @submit="onSubmit" @reset.prevent="onReset" v-if="show">
               <b-row>
                 <b-col>
                   <b-form-group
@@ -38,8 +38,7 @@
                       id="exampleInput2"
                       type="password"
                       v-model="form.oldpassword"
-                      required
-                      placeholder="Old password"
+                      placeholder="Current password"
                     />
                   </b-form-group>
                 </b-col>
@@ -53,7 +52,6 @@
                       id="exampleInput3"
                       type="password"
                       v-model="form.newpassword"
-                      required
                       placeholder="New password"
                     />
                   </b-form-group>
@@ -71,10 +69,10 @@
 
 <script>
 
-import { mapState } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
-  data () {
+  data() {
     return {
       form: {
         username: '',
@@ -85,21 +83,18 @@ export default {
     };
   },
   computed: {
-    ...mapState('devices', {
-      items: state => state.devices.map(device => ({
-        ...device,
-        status: false
-      }))
-    })
+    ...mapState('auth', ['username', 'error'])
   },
   methods: {
+    ...mapActions('auth', ['changeName']),
     onSubmit (evt) {
       evt.preventDefault();
-      alert(JSON.stringify(this.form));
-    },
-    onReset (evt) {
+      this.changeName({ username: this.form.username, oldPassword: this.form.oldpassword, newPassword: this.form.newpassword});
       evt.preventDefault();
-      this.form.username = '';
+      this.onReset();
+    },
+    onReset () {
+      //this.form.username = '';
       this.form.oldpassword = '';
       this.form.newpassword = '';
       this.show = false;
@@ -107,6 +102,9 @@ export default {
         this.show = true;
       });
     }
-  }
+  },
+  mounted() {
+    this.form.username = this.username;
+  },
 };
 </script>

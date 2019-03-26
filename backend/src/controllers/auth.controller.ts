@@ -14,7 +14,7 @@ export class AuthController {
             throw Boom.badRequest();
 
         const foundUser = await User.findOne({ username });
-        if(!foundUser || !await this.validatePassword(foundUser.password, password))
+        if(!foundUser || !await AuthController.validatePassword(foundUser.password, password))
             throw Boom.unauthorized('No user with the given username and password was found');
 
         ctx.body = {
@@ -38,7 +38,7 @@ export class AuthController {
 
         const createdUser = await User.create({
             username,
-            password: await this.generateHash(password)
+            password: await AuthController.generateHash(password)
         }).save();
 
         ctx.body = {
@@ -50,11 +50,11 @@ export class AuthController {
         };
     }
 
-    private async generateHash(password: string) {
+    static async generateHash(password: string) {
         return await bcrypt.hash(password, 10);
     }
 
-    private async validatePassword(hash: string, password: string) {
+    static async validatePassword(hash: string, password: string) {
         return await bcrypt.compare(password, hash);
     }
 

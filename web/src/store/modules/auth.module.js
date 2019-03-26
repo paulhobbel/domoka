@@ -15,8 +15,6 @@ export default {
       state.username = username;
     },
     SET_ERROR (state, message) {
-      state.token = null;
-      state.username = null;
       state.error = message;
     },
     CLEAR_ERROR (state) {
@@ -41,6 +39,15 @@ export default {
       } catch (err) {
         // console.log(err.response.data.message);
         localStorage.removeItem('token');
+        commit('SET_ERROR', err.response.data.message);
+      }
+    },
+    async changeName ({ commit }, { username, oldPassword, newPassword }) {
+      commit('CLEAR_ERROR');
+      try {
+        const { user } = await AuthService.changeName(username, oldPassword, newPassword);
+        commit("SET_USERNAME", user.username);
+      } catch (err) {
         commit('SET_ERROR', err.response.data.message);
       }
     },
