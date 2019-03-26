@@ -21,7 +21,7 @@
     "mqtt": "^2.18.8",
     "rpio": "^1.0.13"
   },
-  "peerDependencies": {
+  "optionalDependencies": {
     "rpio": "^1.0.13"
   }
 }
