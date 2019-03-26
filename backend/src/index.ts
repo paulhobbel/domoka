@@ -1,4 +1,5 @@
 import Koa from 'koa';
+import KoaCors from '@koa/cors';
 import KoaBodyParser from 'koa-bodyparser';
 
 import AppRouter from './routes';
@@ -12,6 +13,7 @@ import { KakuDriver } from './kaku/driver';
 
     const app = new Koa();
 
+    app.use(KoaCors());
     app.use(ErrorMiddleware);
     app.use(KoaBodyParser());
     app.use(AppRouter.routes());
