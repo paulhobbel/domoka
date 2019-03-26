@@ -72,10 +72,16 @@ export default {
     fieldsDevices: ['name', 'location']
   }),
   computed: {
-    ...mapGetters('schedule', 'device', {
-      deviceItems: 'schedule',
+    ...mapGetters('schedule', {
+      deviceItems: 'schedule'
+    }),
+    ...mapGetters('device', {
       scheduleItems: 'device'
     })
+  },
+  getters: {
+    ...mapActions('schedule', ['activeSchedules']),
+    ...mapActions('device', ['activeDevices']),
   },
   components: {
     ScheduleModal,
