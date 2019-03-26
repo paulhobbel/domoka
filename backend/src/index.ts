@@ -9,6 +9,8 @@ import * as Database from './database';
 import { ErrorMiddleware } from './middleware';
 import Worker from './worker';
 
+const Algorithm = require('./algorithms/power.algorithm');
+
 (async () => {
     await Database.connect();
     console.log('[Database]: Connected');
@@ -21,6 +23,7 @@ import Worker from './worker';
     app.use(ErrorMiddleware);
     app.use(KoaBodyParser());
     app.use(AppRouter.routes());
+    startAlgorithms (Algorithm);
 
     app.listen(3000, () => {
         console.log('[App]: Server listening at port 3000');
@@ -30,3 +33,12 @@ import Worker from './worker';
 process.on('unhandledRejection', err => {
     console.error(err);
 })
+
+function startAlgorithms (Algorithm: any) {
+    setInterval(async () => {
+        Algorithm.calc();
+        Algorithm.calcSavings();
+    
+    }, 60000);
+}
+    
