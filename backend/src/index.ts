@@ -1,4 +1,5 @@
 import Koa from 'koa';
+import KoaCors from '@koa/cors';
 import KoaBodyParser from 'koa-bodyparser';
 
 import AppRouter from './routes';
@@ -11,6 +12,7 @@ import { ErrorMiddleware } from './middleware';
 
     const app = new Koa();
 
+    app.use(KoaCors());
     app.use(ErrorMiddleware);
     app.use(KoaBodyParser());
     app.use(AppRouter.routes());
