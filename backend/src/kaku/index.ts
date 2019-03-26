@@ -9,8 +9,8 @@ console.log('[src/kaku/index] Hello world!\n');
 (async () => {
     let kakuDriver: KakuDriver = new KakuDriver();
     let mqttDevice: Device = new Device(ip);
-    mqttDevice.addElectronicComponent(new Led(0, false, function(isOn: boolean, id: number): void {
-        if (isOn) {
+    mqttDevice.addElectronicComponent(new Led(0, false, function(turnOn: boolean, id: number): void {
+        if (turnOn) {
             kakuDriver.on('A', id);
         } else {
             kakuDriver.off('A', id);            
