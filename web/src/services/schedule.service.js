@@ -16,9 +16,7 @@ export default {
   },
 
   async edit ({ id, ...schedule }) {
-    const res = await ApiService().patch(`/schedules/${id}`, {
-      schedule
-    });
+    const res = await ApiService().patch(`/schedules/${id}`, schedule);
 
     return res.data;
   },

@@ -50,7 +50,7 @@ export class ScheduleController {
 
         let schedule = await scheduleRepositiry.findOne(+ctx.params.id);
         if(!schedule)
-            throw Boom.notFound('Device with given id not found');
+            throw Boom.notFound('Schedule with given id not found');
 
         schedule.name = name || schedule.name;
         schedule.description = description || schedule.description;
@@ -58,12 +58,13 @@ export class ScheduleController {
         schedule.endTime = endTime || schedule.endTime;
         schedule.devices = devices || schedule.devices;
 
-        await scheduleRepositiry.update(schedule.id, schedule);
+        const updated = await schedule.save();
 
         ctx.status = 200;
         ctx.body = {
             statusCode: 200,
-            message: 'Edited the item from schedules'
+            message: 'Edited the item from schedules',
+            schedule: updated
         };
     }
 

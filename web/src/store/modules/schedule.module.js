@@ -25,6 +25,7 @@ export default {
     },
     EDIT (state, schedule) {
       const found = state.schedules.find(item => item.id === schedule.id);
+
       found.name = schedule.name;
       found.description = schedule.description;
       found.beginTime = schedule.beginTime;
