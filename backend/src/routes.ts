@@ -21,9 +21,9 @@ router.get('/power', JwtMiddleware, controllers.power.getPower);
 router.post('/power', JwtMiddleware, controllers.power.resetPower);
 
 router.get('/users/@me', JwtMiddleware, controllers.user.getMe);
+router.patch('/users/@me', JwtMiddleware, controllers.user.updateMe);
 
 router.post('/auth/login', controllers.auth.postLogin);
 router.post('/auth/register', controllers.auth.postRegister);
-
 
 export default router;

@@ -13,5 +13,13 @@ export default {
     const res = await ApiService().get('/users/@me');
 
     return res.data;
+  },
+
+  async changeName (username, oldPassword, newPassword) {
+    const res = await ApiService().patch('/users/@me', {
+      username, oldPassword, newPassword
+    });
+
+    return res.data;
   }
 };
