@@ -44,5 +44,4 @@ class Worker {
     }
 }
 
-// export default new Worker(process.env.MQTT_HOST || 'localhost');
-export default new Worker('test.mosquitto.org:1883');
+export default new Worker(process.env.MQTT_HOST || 'localhost');
