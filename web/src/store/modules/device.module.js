@@ -76,6 +76,17 @@ export default {
       }
     },
 
+    async toggle ({ commit }, id) {
+      try {
+        const { device } = await DeviceService.toggle(id);
+
+        commit('SUCCES', device);
+      } catch (err) {
+        commit('FAILED', err.message);
+        throw err;
+      }
+    },
+
     async delete ({ commit }, id) {
       try {
         await DeviceService.delete(id);

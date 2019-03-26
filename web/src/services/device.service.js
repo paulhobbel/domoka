@@ -13,6 +13,12 @@ export default {
     return res.data;
   },
 
+  async toggle ({ id }) {
+    const res = await ApiService().post(`/devices/${id}`);
+
+    return res.data;
+  },
+
   async edit ({ id, ...device }) {
     const res = await ApiService().patch(`/devices/${id}`, device);
 
