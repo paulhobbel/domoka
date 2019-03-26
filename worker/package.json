@@ -17,6 +17,7 @@
   "dependencies": {
     "@types/node": "^11.11.8",
     "@types/rpio": "^0.0.2",
+    "dotenv": "^7.0.0",
     "mqtt": "^2.18.8",
     "rpio": "^1.0.13"
   },
