@@ -5,10 +5,6 @@
         title="Devices Overview"
         class="mb-4">
         <b-table striped hover :fields="fieldsDevices" :items="deviceItems">
-          <template slot="status" slot-scope="row">
-            <b-form-checkbox switch @change="toggleStatus(row, $event)" :checked="row.value">
-            </b-form-checkbox>
-          </template>
         </b-table>
 
       </b-card>
@@ -18,10 +14,6 @@
         class="mb-4">
 
         <b-table striped hover :fields="fieldsSchedule" :items="scheduleItems">
-          <template slot="status" slot-scope="row">
-            <b-form-checkbox switch @change="toggleStatus(row, $event)" :checked="row.value">
-            </b-form-checkbox>
-          </template>
         </b-table>
 
       </b-card>
