@@ -17,7 +17,6 @@
       img-left
       img-height= 148
       img widht= 148
-      img-padding= 10
       title="Power overview">
         <b-card-text>
           Power usage: 20 kwh
@@ -34,7 +33,6 @@
         img-left
         img-height= 148
         img-widht= 148
-        img-padding= 10
         title="Cost overview">
           <b-card-text>
             Cost: €20,56
