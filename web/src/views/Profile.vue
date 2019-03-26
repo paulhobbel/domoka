@@ -4,9 +4,9 @@
 
         <b-row>
           <b-card title="Current Profile" class="text-left">
-            Username: {{  }}
+            Username: {{ username }}
           </b-card>
-        
+
         <b-col>
           <b-card title="Edit Profile" class="text-left">
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
@@ -57,7 +57,7 @@
                       placeholder="New password"
                     />
                   </b-form-group>
-                </b-col>                
+                </b-col>
               </b-row>
               <b-button type="submit" variant="primary" with>Submit</b-button>
               <b-button type="reset" variant="danger">Reset</b-button>
@@ -70,6 +70,9 @@
 </template>
 
 <script>
+
+import { mapState } from 'vuex';
+
 export default {
   data() {
     return {
@@ -96,6 +99,9 @@ export default {
         this.show = true;
       });
     }
-  }
+  },
+  computed: {
+    ...mapState('auth', ['username'])
+    }
 };
 </script>
