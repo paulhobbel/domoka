@@ -8,6 +8,7 @@ import Login from '@/views/Login.vue';
 import Devices from '@/views/Devices.vue';
 import Schedule from '@/views/Schedule.vue';
 import Settings from '@/views/Settings.vue';
+import Profile from '@/views/Profile.vue';
 
 import { MetaGuard } from './guards';
 
@@ -51,6 +52,14 @@ const router = new Router({
       path: '/settings',
       name: 'settings',
       component: Settings,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
       meta: {
         requiresAuth: true
       }

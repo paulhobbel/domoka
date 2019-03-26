@@ -1,0 +1,49 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558 
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Backend start:dev",
+            "type": "npm",
+            "script": "dev",
+            "path": "backend/",
+            "problemMatcher": []
+        },
+        {
+            "label": "Worker start:dev",
+            "type": "npm",
+            "script": "dev",
+            "path": "worker/",
+            "problemMatcher": []
+        },
+        {
+            "label": "Web start:dev",
+            "type": "npm",
+            "script": "serve",
+            "path": "web/",
+            "problemMatcher": []
+        },
+        {
+            "label": "Backend build",
+            "type": "npm",
+            "script": "build",
+            "path": "backend/",
+            "problemMatcher": []
+        },
+        {
+            "label": "Worker build",
+            "type": "npm",
+            "script": "build",
+            "path": "worker/",
+            "problemMatcher": []
+        },
+        {
+            "label": "Web build",
+            "type": "npm",
+            "script": "build",
+            "path": "web/",
+            "problemMatcher": []
+        }
+    ]
+}

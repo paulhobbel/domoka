@@ -35,9 +35,9 @@
     "koa-bodyparser": "^4.2.1",
     "koa-jwt": "^3.5.1",
     "koa-router": "^7.4.0",
+    "mqtt": "^2.18.8",
     "sequelize": "^4.43.0",
     "sqlite3": "^4.0.6",
-    "typeorm": "^0.2.15",
-    "mqtt": "^2.18.8"
+    "typeorm": "^0.2.15"
   }
 }

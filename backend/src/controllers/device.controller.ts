@@ -67,6 +67,30 @@ export class DeviceController {
             device: updated
         };
     }
+    
+    toggleDevice = async (ctx: Koa.BaseContext) => {
+        const deviceRepository = getRepository(Device)
+
+        let device = await deviceRepository.findOne(+ctx.params.id);
+
+        if(!device)
+            throw Boom.notFound('Device with given id not found');
+
+        if(device.status === true) {
+            device.status = false;
+        }
+        else {
+            device.status = true;
+        }
+
+        const updated = await device.save();
+
+        ctx.body = {
+            statusCode: 200,
+            message: 'Toggeled the item from devices',
+            device: updated
+        };
+    }
 
     deleteDevice = async (ctx: Koa.BaseContext) => {
         const deviceRepository = getRepository(Device);
