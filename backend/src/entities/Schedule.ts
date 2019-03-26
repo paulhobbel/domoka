@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity, ManyToMany, JoinTable } from "typeorm";
 import {Device} from "./Device";
 
 @Entity({ name: 'schedules' })
@@ -18,6 +18,7 @@ export class Schedule extends BaseEntity {
     @Column({type: 'time'})
     endTime: string;
 
-    @OneToMany(type => Device, device => device.schedule)
+    @ManyToMany(type => Device)
+    @JoinTable()
     devices: Device[];
 }

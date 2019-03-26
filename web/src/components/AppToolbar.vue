@@ -10,15 +10,13 @@
           <b-nav-item href="#" to="/" exact>Home</b-nav-item>
           <b-nav-item href="#" to="/schedule">Schedule</b-nav-item>
           <b-nav-item href="#" to="/devices">Devices</b-nav-item>
-          <b-nav-item href="#" to="/settings">Settings</b-nav-item>
+          <!-- <b-nav-item href="#" to="/settings">Settings</b-nav-item> -->
         </b-navbar-nav>
 
-        <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown right v-if="isLoggedIn">
-            <!-- Using button-content slot -->
             <template slot="button-content">{{ username }}</template>
-            <b-dropdown-item href="/profile">Profile</b-dropdown-item>
+            <b-dropdown-item to="/profile">Profile</b-dropdown-item>
             <b-dropdown-item href="#" @click="logout">Signout</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -36,6 +34,5 @@ export default {
     ...mapGetters('auth', ['isLoggedIn'])
   },
   methods: mapActions('auth', ['logout'])
-}
+};
 </script>
-

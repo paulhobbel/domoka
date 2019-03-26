@@ -7,7 +7,6 @@
       :title="title"
       @ok="handleSubmit"
     >
-      <!-- <form @submit.stop.prevent="handleSubmit"> -->
       <p v-if="type == 'delete'">Are you sure you want to delete the device "{{ device.name }}". This action is irreversible!</p>
       <template v-else>
         <b-form-group label="ID:">
@@ -23,7 +22,6 @@
           <b-form-input type="number" placeholder="Watt" v-model="device.watt" required />
         </b-form-group>
       </template>
-      <!-- </form> -->
     </b-modal>
   </div>
 </template>
@@ -43,7 +41,7 @@ export default {
     }
   }),
   computed: {
-    title() {
+    title () {
       return `${this.type.charAt(0).toUpperCase() + this.type.slice(1)} ${this.device.name || 'Device'}`;
     }
   },
@@ -52,7 +50,7 @@ export default {
     async handleSubmit (evt) {
       evt.preventDefault();
       try {
-        switch(this.type) {
+        switch (this.type) {
           case 'add':
             await this.create(this.device);
             break;
@@ -74,7 +72,7 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     this.$on('add', () => {
       this.type = 'add';
       this.device = {
@@ -88,13 +86,13 @@ export default {
     });
 
     this.$on('edit', (device) => {
-      this.type = 'edit'
+      this.type = 'edit';
       this.device = device;
       this.$refs.modal.show();
     });
 
     this.$on('delete', (device) => {
-      this.type = 'delete'
+      this.type = 'delete';
       this.device = device;
       this.$refs.modal.show();
     });
