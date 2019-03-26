@@ -43,7 +43,7 @@ export default {
       commit('REQUEST');
 
       try {
-        const { result } = await ScheduleService.getschedules();
+        const { result } = await ScheduleService.fetchAll();
         commit('SUCCESS', result);
       } catch (err) {
         commit('FAILED', err);
@@ -79,7 +79,7 @@ export default {
       commit('REQUEST');
 
       try {
-        await ScheduleService.deleteSchedule(id);
+        await ScheduleService.delete(id);
         commit('REMOVE', id);
       } catch (err) {
         console.log(err);

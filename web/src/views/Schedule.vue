@@ -63,6 +63,9 @@ export default {
       this.$refs.modal.$emit('add');
     }
   },
+  mounted() {
+    this.fetchAll();
+  },
   components: {
     ScheduleModal
   }
