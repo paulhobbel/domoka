@@ -27,17 +27,12 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import ScheduleModal from '@/components/ScheduleModal.vue';
 import { mapActions, mapState } from 'vuex';
+import ScheduleModal from '@/components/ScheduleModal.vue';
 
 export default {
   data: () => ({
-    fields: ['id', 'name', 'description', 'status', 'beginTime', 'endTime', 'edit']
-    // items: [
-    //   { number: 1, name: 'wake-up bedroom', disciprtion: 'When I wake up thete is light', status: true, starttime: '06:32', endtime: '08:20' },
-    //   { number: 3, name: 'Light in evening', disciprtion: 'Sensor that looks if it is dark enough for the lights. and turns them on', status: true, starttime: '20:00', endtime: '02:00' }
-    // ]
+    fields: [{ key: 'id', label: 'ID' }, 'name', 'description', 'status', 'beginTime', 'endTime', 'edit']
   }),
   computed: {
     ...mapState('schedule', {

@@ -49,9 +49,9 @@ export default {
       }
     },
 
-    async create ({ commit }, { name, location }) {
+    async create ({ commit }, { deviceId, name, location }) {
       try {
-        const { device } = await DeviceService.create({ name, location });
+        const { device } = await DeviceService.create({ deviceId, name, location });
 
         commit('ADD', device);
       } catch (err) {
@@ -59,10 +59,11 @@ export default {
       }
     },
 
-    async edit ({ commit }, { id, name, location }) {
+    async edit ({ commit }, { id, deviceId, name, location }) {
       try {
         const { device } = await DeviceService.edit({
           id,
+          deviceId,
           name,
           location
         });
