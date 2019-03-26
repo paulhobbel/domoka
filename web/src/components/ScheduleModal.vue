@@ -67,7 +67,7 @@ export default {
           await this.create({ ...this.schedule, devices: this.selected });
           break;
         case 'edit':
-          await this.edit(this.schedule);
+          await this.edit({ ...this.schedule, devices: this.selected });
           break;
         case 'delete':
           await this.delete(this.schedule.id);
@@ -82,7 +82,6 @@ export default {
   created () {
     this.$on('add', () => {
       const date = new Date();
-
       this.type = 'add';
       this.schedule = {
         id: null,
@@ -96,7 +95,6 @@ export default {
     });
 
     this.$on('edit', (schedule) => {
-      console.log(schedule);
       this.type = 'edit';
       this.schedule = schedule;
       this.selected = schedule.devices.map(device => device.id) || [];

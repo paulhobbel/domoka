@@ -1,12 +1,18 @@
 <template>
   <div class="home">
-    <b-card
-      title="Devices"
-      class="mb-4">
+    <b-card-group deck>
+      <b-card
+        title="Devices Overview"
+        class="mb-4">
+        <b-table striped :fields="fieldsDevices" :items="activeDevices"/>
+      </b-card>
 
-      <app-table/>
-
-    </b-card>
+      <b-card
+        title="Schedules Overview"
+        class="mb-4">
+        <b-table striped :fields="fieldsSchedule" :items="activeSchedules"/>
+      </b-card>
+    </b-card-group>
 
     <b-card
     title="Savings"
@@ -51,11 +57,28 @@
 
 <script>
 // @ is an alias to /src
-import AppTable from '@/components/AppTable.vue';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  components: {
-    AppTable
+  data: () => ({
+    fieldsSchedule: ['name', 'description'],
+    fieldsDevices: ['name', 'location']
+  }),
+  computed: {
+    ...mapGetters('devices', ['activeDevices']),
+    ...mapGetters('schedule', ['activeSchedules']),
+  },
+  methods: {
+    ...mapActions('devices', {
+      fetchDevices: 'fetchAll'
+    }),
+    ...mapActions('schedule', {
+      fetchSchedules: 'fetchAll'
+    }),
+  },
+  mounted () {
+    this.fetchDevices();
+    this.fetchSchedules();
   }
 };
 </script>
