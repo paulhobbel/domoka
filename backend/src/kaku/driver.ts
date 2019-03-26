@@ -1,126 +1,89 @@
 import rpio from 'rpio';
 
-const HIGH  = rpio.HIGH;
-const LOW   = rpio.LOW;
-
 export class KakuDriver {
 
-  constructor(
-        private pin = 11, 
-        private periodusec = 260,
-        private repeats = 7,
-        private pulsewidth = 5) {
-    rpio.open(pin, rpio.OUTPUT, LOW);
-  }
+    constructor(
+        private pin = 8,
+        private periodusec = 375,
+        private repeats = 7) {
 
-  on(address: number, unit: number) {
-    this.transmit(address, unit, true);
-  }
-
-  off(address: number, unit: number) {
-    this.transmit(address, unit, false);
-  }
-
-  dim(address: number, unit: number, level: number) {
-    this.transmit(address, unit, 'dim', level);
-  }
-
-  groupOn(address: number) {
-    this.group(address, true);
-  }
-
-  groupOff(address: number) {
-    this.group(address, false);
-  }
-
-  group(address: number, on: boolean) {
-    this.transmit(address, 0, on, true);
-  }
-
-  transmit(address: number, unit: number, value: boolean | 'dim', groupOrLevel?: boolean | number) {
-    let dimming = value === 'dim';
-
-    // Build data packet.
-    let packet = '';
-
-    // 26-bit address
-    packet += encode(address, 26);
-    
-    // Handle dimming command.
-    if (dimming) {
-      packet += '02';
-    } else {
-      packet += String(Number(!!groupOrLevel));
-      packet += String(Number(!!value));
+        rpio.open(pin, rpio.OUTPUT, rpio.LOW);
     }
 
-    // 4-bit unit number.
-    packet += encode(unit, 4);
-
-    // Add dim-level if we're dimming.
-    if (dimming) {
-      packet += encode(groupOrLevel, 4);
+    on(address: string, device: number) {
+        this.transmit(address, device, true);
     }
 
-    let pin        = this.pin;
-    let periodusec = this.periodusec;
-    let pulsewidth = this.pulsewidth;
-    for (let i = 0; i < this.repeats; i++) {
-      this.sendStartPulse();
-      packet.split('').forEach(bit => {
-        switch(bit) {
-          case '0':
-            rpio.write(pin, HIGH);
+    off(address: string, device: number) {
+        this.transmit(address, device, false);
+    }
+
+    transmit(address: string, device: number, on: boolean) {
+        let trits      = this.getTelegram(address, device, on);
+        let pin        = this.pin;
+        let periodusec = this.periodusec;
+
+        for (let j = 0; j < this.repeats; j++) {
+            for (let i = 0; i < 12; i++) {
+                let code = trits[i];
+                switch (code) {
+                    case 0:
+                        rpio.write(pin, rpio.HIGH);
+                        rpio.usleep(periodusec);
+                        rpio.write(pin, rpio.LOW);
+                        rpio.usleep(periodusec * 3);
+                        rpio.write(pin, rpio.HIGH);
+                        rpio.usleep(periodusec);
+                        rpio.write(pin, rpio.LOW);
+                        rpio.usleep(periodusec * 3);
+                    break;
+                    case 1:
+                        rpio.write(pin, rpio.HIGH);
+                        rpio.usleep(periodusec * 3);
+                        rpio.write(pin, rpio.LOW);
+                        rpio.usleep(periodusec);
+                        rpio.write(pin, rpio.HIGH);
+                        rpio.usleep(periodusec * 3);
+                        rpio.write(pin, rpio.LOW);
+                        rpio.usleep(periodusec);
+                        break;
+                    case 2:
+                        rpio.write(pin, rpio.HIGH);
+                        rpio.usleep(periodusec);
+                        rpio.write(pin, rpio.LOW);
+                        rpio.usleep(periodusec * 3);
+                        rpio.write(pin, rpio.HIGH);
+                        rpio.usleep(periodusec * 3);
+                        rpio.write(pin, rpio.LOW);
+                        rpio.usleep(periodusec);
+                        break;
+                    }
+                }
+            rpio.write(pin, rpio.HIGH);
             rpio.usleep(periodusec);
-            rpio.write(pin, LOW);
-            rpio.usleep(periodusec);
-            rpio.write(pin, HIGH);
-            rpio.usleep(periodusec);
-            rpio.write(pin, LOW);
-            rpio.usleep(periodusec * pulsewidth);
-            break;
-          case '1':
-            rpio.write(pin, HIGH);
-            rpio.usleep(periodusec);
-            rpio.write(pin, LOW);
-            rpio.usleep(periodusec * pulsewidth);
-            rpio.write(pin, HIGH);
-            rpio.usleep(periodusec);
-            rpio.write(pin, LOW);
-            rpio.usleep(periodusec);
-            break;
-          case '2':
-            rpio.write(pin, HIGH);
-            rpio.usleep(periodusec);
-            rpio.write(pin, LOW);
-            rpio.usleep(periodusec);
-            rpio.write(pin, HIGH);
-            rpio.usleep(periodusec);
-            rpio.write(pin, LOW);
-            rpio.usleep(periodusec);
-            break;
+            rpio.write(pin, rpio.LOW);
+            rpio.usleep(periodusec * 31);
         }
-      });
-      this.sendStopPulse();
     }
-  }
 
-  private sendStartPulse() {
-    rpio.write(this.pin, HIGH);
-    rpio.usleep(this.periodusec);
-    rpio.write(this.pin, LOW);
-    rpio.usleep(this.periodusec * 10 + (this.periodusec >> 1)); // Actually 10.5T insteat of 10.44T. Close enough.
-  }
+    getTelegram(_address: string, _device: number, on: boolean) {
+        let trits   = [];
+        let address = _address.charCodeAt(0) - 65;
+        let device  = _device - 1;
 
-  private sendStopPulse() {
-    rpio.write(this.pin, HIGH);
-    rpio.usleep(this.periodusec);
-    rpio.write(this.pin, LOW);
-    rpio.usleep(this.periodusec * 40);
-  }
-}
+        for (let i = 0; i < 4; i++) {
+        trits[i] = (address & 1 ) ? 2 : 0;
+        address >>= 1;
 
-function encode(value: any, len: number) {
-  let n = value.toString(2);
-  return new Array(len + 1).join('0').substr(n.length) + n;
+        trits[i + 4] = (device & 1) ? 2 : 0;
+        device >>= 1;
+        }
+        trits[8] = 0;
+        trits[9] = 2;
+        trits[10] = 2;
+        trits[11] = on ? 2 : 0;
+
+        return trits;
+    }
+
 }
