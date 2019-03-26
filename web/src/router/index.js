@@ -6,6 +6,7 @@ import Login from '@/views/Login.vue';
 import Devices from '@/views/Devices.vue';
 import Schedule from '@/views/Schedule.vue';
 import Settings from '@/views/Settings.vue';
+import Profile from '@/views/Profile.vue';
 
 import { AuthGuard } from './guards';
 
@@ -44,6 +45,13 @@ export default new Router({
       name: 'settings',
       beforeEnter: AuthGuard,
       component: Settings
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      beforeEnter: AuthGuard,
+      component: Profile
     }
+
   ]
 });
