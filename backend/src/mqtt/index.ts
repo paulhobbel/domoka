@@ -6,7 +6,7 @@ let ip: string = '145.48.205.24'; //Raspberry PI ip
 // let ip: string = 'test.mosquitto.org:1883'; //Test ip
 let deviceName: string = 'kaku';
 
-let controller: Controller = new Controller(ip, deviceName);
+let controller: Controller = new Controller(ip);
 
 (async () => { 
     while(true){

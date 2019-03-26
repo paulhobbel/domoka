@@ -6,16 +6,14 @@ import { IElectronicComponent } from './components/iElectronicComponent';
 
 export class Device {
     client: MqttClient;
-    name: string;
     components: Array<IElectronicComponent>;
 
-    constructor (ip: string, name: string) {
-        this.name = name;
+    constructor (ip: string) {
         this.client = mqtt.connect('mqtt://' + ip);
         this.components = new Array<IElectronicComponent>();
 
         this.client.on('connect', () => {
-            this.client.subscribe(this.name + '/manipulation');
+            this.client.subscribe('manipulation');
             
             this.sendConnectedMessage();
         });
@@ -24,7 +22,7 @@ export class Device {
             let obj: IMessage = JSON.parse(message.toString());
 
             switch (topic) {
-                case (this.name + '/manipulation'):
+                case ('manipulation'):
                     let manipulationMessage: ManipulationMessage = obj as ManipulationMessage;
 
                     this.components.forEach((element) => {
@@ -38,7 +36,7 @@ export class Device {
         });
 
         this.client.on('error', (error) => {
-            console.log(`[${this.name}] error: ${error.name}, message: ${error.message}`);
+            console.log(`[src/mqtt/device] error: ${error.name}, message: ${error.message}`);
         });
     }
 
@@ -47,9 +45,9 @@ export class Device {
     }
 
     private sendConnectedMessage() : void {
-        let connectedMessage: IMessage = new ConnectedMessage(this.name, true);
+        let connectedMessage: IMessage = new ConnectedMessage(true);
         let connectedMessageJson: string = JSON.stringify(connectedMessage);
 
-        this.client.publish(this.name + '/connected', connectedMessageJson);
+        this.client.publish('connected', connectedMessageJson);
     }
 }

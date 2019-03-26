@@ -8,7 +8,7 @@ console.log('[src/kaku/index] Hello world!\n');
 
 (async () => {
     let kakuDriver: KakuDriver = new KakuDriver();
-    let mqttDevice: Device = new Device(ip, 'kaku');
+    let mqttDevice: Device = new Device(ip);
     mqttDevice.addElectronicComponent(new Led(0, false, function(isOn: boolean, id: number): void {
         if (isOn) {
             kakuDriver.on('A', id);
@@ -17,7 +17,3 @@ console.log('[src/kaku/index] Hello world!\n');
         }
     }));
 })();
-
-function delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
-}
