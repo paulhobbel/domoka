@@ -19,6 +19,9 @@
         <b-form-group label="Location:">
           <b-form-input type="text" placeholder="Location" v-model="device.location" required />
         </b-form-group>
+        <b-form-group label="Watt:">
+          <b-form-input type="number" placeholder="Watt" v-model="device.watt" required />
+        </b-form-group>
       </template>
       <!-- </form> -->
     </b-modal>
@@ -36,7 +39,7 @@ export default {
       deviceId: 0,
       name: null,
       location: null,
-      watt: null
+      watt: 0
     }
   }),
   computed: {
