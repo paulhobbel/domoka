@@ -38,14 +38,14 @@
         id="Start Time:"
         label="Start:"
         label-for="exampleInput1">
-        <b-form-input v-model="text1" type="text" placeholder="Enter the time like 00:00. from 0 to 24h" />
+        <b-form-input v-model="text1" type="time" placeholder="Enter the time like 00:00. from 0 to 24h" />
       </b-form-group>
 
         <b-form-group
         id="End Time"
         label="End:"
         label-for="exampleInput1">
-        <b-form-input v-model="text1" type="text" placeholder="Enter the time like 00:00. from 0 to 24h " />
+        <b-form-input v-model="text1" type="time" placeholder="Enter the time like 00:00. from 0 to 24h " />
       </b-form-group>
       </form>
     </b-modal>

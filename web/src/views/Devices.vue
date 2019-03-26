@@ -28,10 +28,9 @@ import DeviceEditModal from '@/components/DeviceEditModal.vue';
 import AppAddPopUp from '@/components/AppAddPopUp.vue';
 import { mapState, mapActions } from 'vuex';
 
-
 export default {
   data: () => ({
-    fields: ['id', 'name', 'location', 'status', 'edit'],
+    fields: ['id', 'name', 'location', 'status', 'edit']
     // items: [
     //   { number: 1, name: 'lamp 1', location: 'Kitchen', status: true },
     //   { number: 2, name: 'lamp 2', location: 'Bedroom', status: false },
@@ -62,7 +61,7 @@ export default {
     },
     ...mapActions('devices', ['fetchAll'])
   },
-  mounted() {
+  mounted () {
     this.fetchAll();
   },
   components: {

@@ -79,11 +79,11 @@ export default {
         // commit('FAILED', err.response.data.message);
       }
     },
-    async fetchOne ({ commit }) {
+    async fetchOne ({ commit }, { id }) {
       commit('REQUEST');
 
       try {
-        const { result } = await ScheduleService.getschedules();
+        const { result } = await ScheduleService.getschedules(id);
         commit('SUCCESS', result);
       } catch (err) {
         console.log(err);

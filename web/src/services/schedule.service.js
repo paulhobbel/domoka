@@ -15,7 +15,7 @@ export default {
     return res.data;
   },
 
-  async getschedule () {
+  async getschedule (id) {
     const res = await ApiService().get(`/schedules/${id}`);
 
     return res.data;
