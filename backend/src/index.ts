@@ -4,6 +4,7 @@ import KoaBodyParser from 'koa-bodyparser';
 import AppRouter from './routes';
 import * as Database from './database';
 import { ErrorMiddleware } from './middleware';
+import { KakuDriver } from './kaku/driver';
 
 (async () => {
     await Database.connect();

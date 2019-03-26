@@ -19,6 +19,7 @@
     "@types/koa-bodyparser": "^4.2.2",
     "@types/koa-router": "^7.0.40",
     "@types/node": "^11.11.0",
+    "@types/rpio": "^0.0.2",
     "@types/sequelize": "^4.27.41",
     "nodemon": "^1.18.10",
     "ts-node": "6.0.1",
@@ -33,9 +34,12 @@
     "koa-bodyparser": "^4.2.1",
     "koa-jwt": "^3.5.1",
     "koa-router": "^7.4.0",
+    "mqtt": "^2.18.8",
     "sequelize": "^4.43.0",
     "sqlite3": "^4.0.6",
     "typeorm": "^0.2.15"
-    "mqtt": "^2.18.8"
+  },
+  "peerDependencies": {
+    "rpio": "^1.0.13"
   }
 }
