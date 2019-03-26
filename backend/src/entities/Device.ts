@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, BaseEntity } from "typeorm";
 import {Schedule} from "./Schedule";
 
 export enum DeviceType {
@@ -7,7 +7,7 @@ export enum DeviceType {
 }
 
 @Entity({ name: 'devices' })
-export class Device {
+export class Device extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 

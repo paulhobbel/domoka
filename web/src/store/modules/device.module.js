@@ -23,10 +23,11 @@ export default {
     ADD (state, device) {
       state.devices.push(device);
     },
-    EDIT (state, { device, name = device.name, location = device.location, status = device.status }) {
-      device.name = name;
-      device.location = location;
-      device.status = status;
+    EDIT (state, device) {
+      const foundDevice = state.devices.find(item => item.id == device.id);
+
+      foundDevice.name = device.name;
+      foundDevice.location = device.location;
     },
     REMOVE (state, device) {
       state.devices.splice(state.devices.indexOf(device), 1);
@@ -55,8 +56,21 @@ export default {
       }
     },
 
-    async edit ({ commit }, device) {
+    async edit ({ commit }, { id, name, location }) {
+      try {
+        const { device } = await DeviceService.edit({
+          id,
+          name,
+          location
+        });
 
+        console.log(device);
+
+        commit('EDIT', device);
+      } catch (err) {
+        commit('FAILED', err.message);
+        throw err;
+      }
     },
 
     async delete ({ commit }, device) {

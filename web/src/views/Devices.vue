@@ -10,21 +10,21 @@
           </b-form-checkbox>
         </template>
         <template slot="edit" slot-scope="row">
-           <b-button v-b-modal.modalPrevent variant="primary">Edit</b-button >
+           <b-button @click="editItem(row)" variant="primary">Edit</b-button >
            <b-button @click="deleteItem(row, $event)" variant="danger">Delete</b-button>
         </template>
       </b-table>
       <b-button v-b-modal.modalAdd variant="primary">Add</b-button>
     </b-card>
 
-    <app-edit-pop-up/>
+    <device-edit-modal ref="editModal"/>
     <app-add-pop-up/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import AppEditPopUp from '@/components/AppEditPopUp.vue';
+import DeviceEditModal from '@/components/DeviceEditModal.vue';
 import AppAddPopUp from '@/components/AppAddPopUp.vue';
 import { mapState, mapActions } from 'vuex';
 
@@ -55,7 +55,7 @@ export default {
       this.items.splice(row.index, 1);
     },
     editItem (row) {
-
+      this.$refs.editModal.$emit('editDevice', row.item);
     },
     addItem () {
 
@@ -66,7 +66,7 @@ export default {
     this.fetchAll();
   },
   components: {
-    AppEditPopUp,
+    DeviceEditModal,
     AppAddPopUp
   }
 };

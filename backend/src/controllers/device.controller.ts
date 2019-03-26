@@ -50,15 +50,16 @@ export class DeviceController {
 
         device.name = name || device.name;
         device.description = description || device.description;
-        device.location || location || device.location;
+        device.location = location || device.location;
         device.type = type || device.type;
 
-        await deviceRepository.update(device.id, device);
+        const updated = await device.save();
 
         ctx.status = 200;
         ctx.body = {
             statusCode: 200,
-            message: 'Edited the item from devices'
+            message: 'Edited the item from devices',
+            device: updated
         };
     }
 
