@@ -9,7 +9,7 @@ export class UserController {
         const userRepository = getRepository(User);
 
         const user = await userRepository.findOne(ctx.state.user.id);
-
+        
         if(!user)
             throw Boom.unauthorized();
         

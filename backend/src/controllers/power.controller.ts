@@ -9,7 +9,7 @@ export class PowerController {
         const powerRepositiry = getRepository(Power);
 
         const power = await powerRepositiry.find();
-
+        
         ctx.status = 200;
         ctx.body = {
             result: power

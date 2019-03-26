@@ -9,7 +9,7 @@ export class DeviceController {
         const deviceRepository = getRepository(Device);
 
         const devices = await deviceRepository.find();
-
+        
         ctx.status = 200;
         ctx.body = {
             count: devices.length,
@@ -21,6 +21,7 @@ export class DeviceController {
         const deviceRepository = getRepository(Device);
 
         const device = await deviceRepository.findOne(+ctx.params.id);
+        
         if(!device)
             throw Boom.notFound('Device with given id not found');
 
