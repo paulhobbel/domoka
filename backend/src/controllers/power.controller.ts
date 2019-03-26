@@ -25,13 +25,10 @@ export class PowerController {
             "moneySavings": 0
         };
 
-        powerRepositiry.clear();
-        powerRepositiry.create(power);
+        await powerRepositiry.clear();
+        const createdPower = await powerRepositiry.create(power).save();
 
         ctx.status = 200;
-        ctx.body = {
-            statusCode: 200,
-            message: 'Reseted Power'
-        };
+        ctx.body = createdPower;
     }
 }

@@ -17,6 +17,9 @@ router.delete('/schedules/:id', JwtMiddleware, controllers.schedule.deleteSchedu
 router.patch('/schedules/:id', JwtMiddleware, controllers.schedule.editSchedule);
 router.post('/schedules', JwtMiddleware, controllers.schedule.createSchedule);
 
+router.get('/power', JwtMiddleware, controllers.power.getPower);
+router.post('/power', JwtMiddleware, controllers.power.resetPower);
+
 router.get('/users/@me', JwtMiddleware, controllers.user.getMe);
 
 router.post('/auth/login', controllers.auth.postLogin);
