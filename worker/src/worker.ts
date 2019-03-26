@@ -2,6 +2,7 @@ import Mqtt, { MqttClient } from 'mqtt';
 import { IMessage } from './messages/iMessage';
 import { ManipulationMessage } from './messages/manipulationMessage';
 import { KakuDriver } from './kaku/driver';
+import 'dotenv/config';
 
 class Worker {
     client: MqttClient;

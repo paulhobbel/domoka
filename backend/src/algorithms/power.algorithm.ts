@@ -3,8 +3,8 @@ import { Device, DeviceType } from '../entities';
 
 export class PowerAlgorithm {
   private readonly cost = 0.0002292;
-  private totalWatt = 0;
-  private totalCost = 0;
+  totalWatt = 0;
+  totalCost = 0;
 
     async calc () {
       const res = getRepository(Device);
@@ -13,7 +13,7 @@ export class PowerAlgorithm {
 
       for(const item of objs) {
         if (item.status){
-          tempWatt++;
+          tempWatt += (item.watt / 60);
         }
       }
 
