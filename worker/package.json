@@ -16,10 +16,9 @@
   },
   "dependencies": {
     "@types/node": "^11.11.8",
-    "mqtt": "^2.18.8",
-    "rpio": "^1.0.13"
+    "mqtt": "^2.18.8"
   },
-  "peerDependencies": {
+  "optionalDependencies": {
     "rpio": "^1.0.13"
   }
 }
