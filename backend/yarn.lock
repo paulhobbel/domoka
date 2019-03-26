@@ -138,6 +138,13 @@
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
 
+"@types/rpio@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@types/rpio/-/rpio-0.0.2.tgz#7c860bb09ed4150260ef734e1ca866f542346d33"
+  integrity sha512-Vm73spdF71D31KznXatpT+v5MnRfq1/YZV9KrhNGFtKd/4kIq/wFGVFXm5ENsYdTLoDmFIymHoGnGSJCnPpkUQ==
+  dependencies:
+    "@types/node" "*"
+
 "@types/sequelize@^4.27.41":
   version "4.27.44"
   resolved "https://registry.yarnpkg.com/@types/sequelize/-/sequelize-4.27.44.tgz#28971ee07af8cb296565f6fd9e2991241a3cdfd3"
@@ -1973,6 +1980,11 @@ nan@~2.10.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
 
+nan@~2.11.0:
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.11.1.tgz#90e22bccb8ca57ea4cd37cc83d3819b52eea6766"
+  integrity sha512-iji6k87OSXa0CcrLl9z+ZiYSuR2o+c0bGuNmXdrhTQTakxytAFsC56SArGYoiHlJlFoHSnvmhpceZJaXkVuOtA==
+
 nanomatch@^1.2.9:
   version "1.2.13"
   resolved "https://registry.yarnpkg.com/nanomatch/-/nanomatch-1.2.13.tgz#b87a8aa4fc0de8fe6be88895b38983ff265bd119"
@@ -2523,6 +2535,14 @@ rimraf@^2.6.1:
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.3.tgz#b2d104fe0d8fb27cf9e0a1cda8262dd3833c6cab"
   dependencies:
     glob "^7.1.3"
+
+rpio@^1.0.13:
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/rpio/-/rpio-1.0.13.tgz#1e8da5b95a162efca3a38bf88d255ae6a856edaa"
+  integrity sha512-9Aj7PmYe5N+Tyy93thDfShCJ2Sjmx1znsluyDdr9altRYZZcFwhXwKRlMGbtp6GX0EnN01Me0x6HNmv/VC4HpA==
+  dependencies:
+    bindings "~1.3.0"
+    nan "~2.11.0"
 
 safe-buffer@5.1.2, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@^5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"
