@@ -25,4 +25,7 @@ export class Device extends BaseEntity {
 
     @Column()
     type: DeviceType;
+
+    @Column()
+    status: boolean;
 }

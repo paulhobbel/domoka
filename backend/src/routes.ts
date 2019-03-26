@@ -8,6 +8,7 @@ router.get('/', controllers.misc.getStatus);
 
 router.get('/devices', JwtMiddleware, controllers.device.getDevices);
 router.post('/devices', JwtMiddleware, controllers.device.createDevice);
+router.post('/devices/:id', JwtMiddleware, controllers.device.toggleDevice);
 router.get('/devices/:id', JwtMiddleware, controllers.device.getDevice);
 router.patch('/devices/:id', JwtMiddleware, controllers.device.editDevice);
 router.delete('/devices/:id', JwtMiddleware, controllers.device.deleteDevice);
