@@ -7,8 +7,8 @@ export default {
     return res.data;
   },
 
-  async create ({ name, location }) {
-    const res = await ApiService().post('/devices', { name, location });
+  async create (device) {
+    const res = await ApiService().post('/devices', device);
 
     return res.data;
   },

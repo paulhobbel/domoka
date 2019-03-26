@@ -29,13 +29,13 @@ export class DeviceController {
     }
 
     createDevice = async (ctx: Koa.BaseContext) => {
-        const { name, location } = ctx.request.body;
+        const { deviceId, name, location } = ctx.request.body;
         const deviceRepository = getRepository(Device);
 
         if(!name || !location)
             throw Boom.badRequest();
 
-        const device = await deviceRepository.create({ name, location, type: DeviceType.Switch }).save();
+        const device = await deviceRepository.create({ deviceId, name, location }).save();
 
         ctx.status = 200;
         ctx.body = {
@@ -46,17 +46,16 @@ export class DeviceController {
     }
 
     editDevice = async (ctx: Koa.BaseContext) => {
-        const { name, description, location, type, watt } = ctx.request.body;
+        const { deviceId, name, location, watt } = ctx.request.body;
         const deviceRepository = getRepository(Device);
 
         let device = await deviceRepository.findOne(+ctx.params.id);
         if(!device)
             throw Boom.notFound('Device with given id not found');
 
+        device.deviceId = deviceId || device.deviceId;
         device.name = name || device.name;
-        device.description = description || device.description;
         device.location = location || device.location;
-        device.type = type || device.type;
         device.watt = watt || device.watt;
 
         const updated = await device.save();
@@ -77,12 +76,7 @@ export class DeviceController {
         if(!device)
             throw Boom.notFound('Device with given id not found');
 
-        if(device.status === true) {
-            device.status = false;
-        }
-        else {
-            device.status = true;
-        }
+        device.status != device.status;
 
         const updated = await device.save();
 

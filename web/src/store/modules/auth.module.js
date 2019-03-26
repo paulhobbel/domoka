@@ -46,7 +46,7 @@ export default {
       commit('CLEAR_ERROR');
       try {
         const { user } = await AuthService.changeName(username, oldPassword, newPassword);
-        commit("SET_USERNAME", user.username);
+        commit('SET_USERNAME', user.username);
       } catch (err) {
         commit('SET_ERROR', err.response.data.message);
       }

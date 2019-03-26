@@ -12,23 +12,20 @@ export class Device extends BaseEntity {
     id: number;
 
     @Column()
-    name: string;
+    deviceId: number;
 
-    @Column({ nullable: true })
-    description: string;
+    @Column()
+    name: string;
 
     @Column({ nullable: true })
     location: string;
 
+    @Column({ default: true })
+    status: boolean;
+
     @ManyToOne(type => Schedule, schedule => schedule.devices, { nullable: true })
     schedule: Schedule;
 
-    @Column()
-    type: DeviceType;
-
     @Column({ nullable: true})
     watt: number;
-
-    @Column({ default: false })
-    status: boolean;
 }

@@ -4,15 +4,12 @@
       class="mb-4">
       <b-card-title class="card-title-actions">
         Devices
-        <!-- <b-button-toolbar aria-label="Toolbar with button groups and input groups"> -->
-          <b-button-group size="sm">
-            <b-button variant="primary" @click="addItem">Add</b-button>
-            <b-button @click="fetchAll">Refresh</b-button>
-          </b-button-group>
-        <!-- </b-button-toolbar> -->
-        <!-- <b-button @click="addItem" variant="primary">Add</b-button> -->
+        <b-button-group size="sm">
+          <b-button variant="primary" @click="addItem">Add</b-button>
+          <b-button @click="fetchAll">Refresh</b-button>
+        </b-button-group>
       </b-card-title>
-      <b-table striped hover :items="items" :fields='fields'>
+      <b-table striped hover :items="items" :fields="fields">
         <template slot="status" slot-scope="row">
           <b-form-checkbox switch @change="toggleStatus(row, $event)" :checked="row.value">
           </b-form-checkbox>
@@ -31,19 +28,12 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import DeviceModal from '@/components/DeviceModal.vue';
 import { mapState, mapActions } from 'vuex';
+import DeviceModal from '@/components/DeviceModal.vue';
 
 export default {
   data: () => ({
-    fields: ['id', 'name', 'location', 'status', 'edit']
-    // items: [
-    //   { number: 1, name: 'lamp 1', location: 'Kitchen', status: true },
-    //   { number: 2, name: 'lamp 2', location: 'Bedroom', status: false },
-    //   { number: 3, name: 'lamp 3', location: 'Living Room', status: true },
-    //   { number: 4, name: 'lamp 4', location: 'Bathroom', status: false }
-    // ]
+    fields: [{ key: 'deviceId', label: 'ID' }, 'name', 'location', 'status', 'edit']
   }),
   computed: {
     ...mapState('devices', {
@@ -52,8 +42,6 @@ export default {
   },
   methods: {
     async toggleStatus (row, flag) {
-      //this.items[row.index].status = flag;
-      console.log(row);
       await this.toggle(row.item.id);
     },
     deleteItem (row) {
