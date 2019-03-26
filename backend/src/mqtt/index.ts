@@ -4,7 +4,7 @@ import { Led } from './components/led';
 
 console.log('[src/mqtt/index] Hello world!\n');
 
-// let ip: string = '192.168.178.32'; //Raspberry PI ip
+// let ip: string = '145.48.205.24'; //Raspberry PI ip
 let ip: string = 'test.mosquitto.org:1883'; //Test ip
 let deviceName: string = 'device1';
 
