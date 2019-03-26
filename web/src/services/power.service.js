@@ -1,7 +1,7 @@
 import ApiService from './api.service';
 
 export default {
-  async fetch () {
+  async getPower () {
     const res = await ApiService().get('/power');
 
     return res.data;

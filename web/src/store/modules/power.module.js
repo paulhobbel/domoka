@@ -5,7 +5,9 @@ export default {
   state: {
     loading: false,
     error: null,
-    power: null
+    powerUsage: '',
+    powerUsed: '',
+    powerSavings: ''
   },
   mutations: {
     REQUEST (state) {
@@ -14,7 +16,9 @@ export default {
     },
     SUCCESS (state, power) {
       state.loading = false;
-      state.power = power;
+      state.powerUsage = power.powerUsage;
+      state.powerUsed = power.powerUsed;
+      state.powerSavings = power.powerSavings;
     },
     FAILED (state, message) {
       state.loading = false;
@@ -22,12 +26,12 @@ export default {
     }
   },
   actions: {
-    async fetch ({ commit }) {
+    async getPower ({ commit }) {
       commit('REQUEST');
 
       try {
-        const { result } = await PowerService.fetch();
-        commit('SUCCES', result);
+        const { result } = await PowerService.getPower();
+        commit('SUCCESS', result);
       } catch (err) {
         console.log(err);
         commit('FAILED', err.message);
