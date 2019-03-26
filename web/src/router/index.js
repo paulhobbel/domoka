@@ -24,20 +24,25 @@ const router = new Router({
       name: 'home',
       component: Home,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title: 'Home'
       }
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      meta: {
+        title: 'Login'
+      }
     },
     {
       path: '/devices',
       name: 'devices',
       component: Devices,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title: 'Devices'
       }
     },
     {
@@ -45,7 +50,8 @@ const router = new Router({
       name: 'schedules',
       component: Schedule,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title: 'Schedules'
       }
     },
     // {
@@ -61,13 +67,23 @@ const router = new Router({
       name: 'profile',
       component: Profile,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title: 'Profile'
       }
     }
   ]
 });
 
 router.beforeEach(MetaGuard);
+router.afterEach((to, from) => {
+  const pageTitle = to.meta.title;
+
+  if (pageTitle) {
+    document.title = `Domoca - ${pageTitle}`;
+  } else {
+    document.title = 'Domoca';
+  }
+});
 
 store.watch(
   (state, getters) => getters['auth/isLoggedIn'],
