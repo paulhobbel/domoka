@@ -74,7 +74,7 @@
 import { mapState } from 'vuex';
 
 export default {
-  data() {
+  data () {
     return {
       form: {
         username: '',
@@ -84,12 +84,20 @@ export default {
       show: true
     };
   },
+  computed: {
+    ...mapState('devices', {
+      items: state => state.devices.map(device => ({
+        ...device,
+        status: false
+      }))
+    })
+  },
   methods: {
-    onSubmit(evt) {
+    onSubmit (evt) {
       evt.preventDefault();
       alert(JSON.stringify(this.form));
     },
-    onReset(evt) {
+    onReset (evt) {
       evt.preventDefault();
       this.form.username = '';
       this.form.oldpassword = '';
@@ -99,9 +107,6 @@ export default {
         this.show = true;
       });
     }
-  },
-  computed: {
-    ...mapState('auth', ['username'])
-    }
+  }
 };
 </script>
