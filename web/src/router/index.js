@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
+import store from '@/store';
+
 import Home from '@/views/Home.vue';
 import Login from '@/views/Login.vue';
 import Devices from '@/views/Devices.vue';
@@ -8,10 +10,11 @@ import Schedule from '@/views/Schedule.vue';
 import Settings from '@/views/Settings.vue';
 
 import { AuthGuard } from './guards';
+import MetaGuard from './guards/meta.guard';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   linkActiveClass: 'active',
@@ -19,8 +22,10 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      beforeEnter: AuthGuard,
-      component: Home
+      component: Home,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/login',
@@ -30,20 +35,39 @@ export default new Router({
     {
       path: '/devices',
       name: 'devices',
-      beforeEnter: AuthGuard,
-      component: Devices
+      component: Devices,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/schedule',
       name: 'schedule',
-      beforeEnter: AuthGuard,
-      component: Schedule
+      component: Schedule,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/settings',
       name: 'settings',
-      beforeEnter: AuthGuard,
-      component: Settings
+      component: Settings,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 });
+
+router.beforeEach(MetaGuard);
+
+store.watch(
+  (state, getters) => getters['auth/isLoggedIn'],
+  (loggedIn) => {
+    if (!loggedIn && router.currentRoute.matched.some(record => record.meta.requiresAuth)) {
+      router.push({ name: 'login', query: { redirect: router.currentRoute.path } });
+    }
+  }
+);
+
+export default router;
