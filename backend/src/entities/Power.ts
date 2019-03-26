@@ -16,6 +16,9 @@ export class Power extends BaseEntity {
     powerSavings: number;
 
     @Column()
+    powerUsage: number;
+
+    @Column()
     moneySavings: number;
 
     // @OneToMany(type => Device, device => device.schedule)
