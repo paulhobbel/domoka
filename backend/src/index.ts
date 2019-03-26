@@ -8,12 +8,15 @@ import AppRouter from './routes';
 import * as Database from './database';
 import { ErrorMiddleware } from './middleware';
 import Worker from './worker';
+import { getRepository } from 'typeorm';
+import { Device } from './entities';
 
 (async () => {
     await Database.connect();
     console.log('[Database]: Connected');
 
-    await Worker.connect();
+    await Worker.connect()
+    await Worker.setup();
 
     const app = new Koa();
 

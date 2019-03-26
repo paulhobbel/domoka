@@ -21,7 +21,7 @@ export class Schedule extends BaseEntity {
     @Column({ default: true })
     status: boolean;
 
-    @ManyToMany(type => Device)
+    @ManyToMany(type => Device, { eager: true })
     @JoinTable()
     devices: Device[];
 }
