@@ -36,6 +36,9 @@ export default {
       }
     }
   },
+  getters: {
+    activeDevices: state => state.devices.filter(device => device.status)
+  },
   actions: {
     async fetchAll ({ commit }) {
       commit('REQUEST');
@@ -44,8 +47,8 @@ export default {
         const { result } = await DeviceService.fetchAll();
         commit('SUCCESS', result);
       } catch (err) {
-        console.log(err);
-        commit('FAILED', err.response.data.message);
+        commit('FAILED', err.message);
+        throw err;
       }
     },
 
@@ -68,8 +71,6 @@ export default {
           location,
           watt
         });
-
-        console.log(device);
 
         commit('EDIT', device);
       } catch (err) {
@@ -95,8 +96,8 @@ export default {
 
         commit('DELETE', id);
       } catch (err) {
-        console.log(err);
         commit('FAILED', err.message);
+        throw err;
       }
     }
   }

@@ -39,6 +39,9 @@ export default {
       }
     }
   },
+  getters: {
+    activeSchedules: state => state.schedules.filter(schedule => schedule.status)
+  },
   actions: {
     async fetchAll ({ commit }) {
       commit('REQUEST');

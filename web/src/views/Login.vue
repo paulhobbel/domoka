@@ -41,14 +41,9 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['login']),
-    async onSubmit (evt) {
-      //evt.preventDefault();
-      //alert(JSON.stringify(this.form));
-
+    async onSubmit () {
       await this.login(this.form);
       this.$router.push(this.$route.query.redirect || '/');
-
-
     }
   },
   computed: mapState('auth', ['error'])
