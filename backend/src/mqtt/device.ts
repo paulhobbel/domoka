@@ -29,17 +29,8 @@ export class Device {
 
                     this.components.forEach((element) => {
                         if(element.id == manipulationMessage.id) {
-                            if (manipulationMessage.turnOn) {
-                                element.isOn = true;
-
-                                console.log(`[${this.name}] turning on component ${element.id}`);
-                                return;
-                            } else {
-                                element.isOn = false;
-
-                                console.log(`[${this.name}] turning off component ${element.id}`);
-                                return;
-                            }
+                            element.callback((element.isOn = manipulationMessage.turnOn), element.id);
+                            return;
                         }
                     });                    
                 break;

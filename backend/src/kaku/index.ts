@@ -1,21 +1,21 @@
 import { KakuDriver } from "./driver"
+import { Led } from "../mqtt/components/led";
+import { Device } from "../mqtt/device";
+
+let ip: string = '145.48.205.24'; //Raspberry PI ip
 
 console.log('[src/kaku/index] Hello world!\n');
 
 (async () => {
     let kakuDriver: KakuDriver = new KakuDriver();
-
-    for(let i = 0; i < 3; i++){
-        kakuDriver.off('A', 0);
-        kakuDriver.off('A', 1);
-        await delay(500);
-        kakuDriver.on('A', 0);
-        kakuDriver.on('A', 1);
-        await delay(500);
-    }
-
-    kakuDriver.off('A', 0);
-    kakuDriver.off('A', 1);
+    let mqttDevice: Device = new Device(ip, 'kaku');
+    mqttDevice.addElectronicComponent(new Led(0, false, function(isOn: boolean, id: number): void {
+        if (isOn) {
+            kakuDriver.on('A', id);
+        } else {
+            kakuDriver.off('A', id);            
+        }
+    }));
 })();
 
 function delay(ms: number) {
