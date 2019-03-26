@@ -8,7 +8,7 @@
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
           <b-nav-item href="#" to="/" exact>Home</b-nav-item>
-          <b-nav-item href="#" to="/schedule">Schedule</b-nav-item>
+          <b-nav-item href="#" to="/schedules">Schedules</b-nav-item>
           <b-nav-item href="#" to="/devices">Devices</b-nav-item>
           <!-- <b-nav-item href="#" to="/settings">Settings</b-nav-item> -->
         </b-navbar-nav>
