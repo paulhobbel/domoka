@@ -35,4 +35,4 @@ class PowerAlgorithm {
     }
 };
 
-module.exports = PowerAlgorithm;
+export default new PowerAlgorithm;
