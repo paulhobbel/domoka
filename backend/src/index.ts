@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import Koa from 'koa';
 import KoaCors from '@koa/cors';
 import KoaBodyParser from 'koa-bodyparser';
@@ -5,10 +7,14 @@ import KoaBodyParser from 'koa-bodyparser';
 import AppRouter from './routes';
 import * as Database from './database';
 import { ErrorMiddleware } from './middleware';
+import Worker from './worker';
 
 (async () => {
     await Database.connect();
     console.log('> Database connected');
+
+    await Worker.connect();
+    console.log('> Worker connected');
 
     const app = new Koa();
 

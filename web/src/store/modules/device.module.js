@@ -80,7 +80,7 @@ export default {
       try {
         const { device } = await DeviceService.toggle(id);
 
-        commit('SUCCES', device);
+        commit('EDIT', device);
       } catch (err) {
         commit('FAILED', err.message);
         throw err;

@@ -13,7 +13,7 @@ export default {
     return res.data;
   },
 
-  async toggle ({ id }) {
+  async toggle (id) {
     const res = await ApiService().post(`/devices/${id}`);
 
     return res.data;

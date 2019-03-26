@@ -22,8 +22,6 @@
             <b-button variant="primary" @click="editItem(row)">Edit</b-button>
             <b-button variant="danger" @click="deleteItem(row)">Delete</b-button>
           </b-button-group>
-           <!-- <b-button @click="editItem(row)" variant="primary" size="sm">Edit</b-button >
-           <b-button @click="deleteItem(row, $event)" variant="danger" size="sm">Delete</b-button> -->
         </template>
       </b-table>
     </b-card>
@@ -49,15 +47,14 @@ export default {
   }),
   computed: {
     ...mapState('devices', {
-      items: state => state.devices.map(device => ({
-        ...device,
-        status: false
-      }))
+      items: state => state.devices
     })
   },
   methods: {
-    toggleStatus (row, flag) {
-      this.items[row.index].status = flag;
+    async toggleStatus (row, flag) {
+      //this.items[row.index].status = flag;
+      console.log(row);
+      await this.toggle(row.item.id);
     },
     deleteItem (row) {
       this.$refs.modal.$emit('delete', row.item);
@@ -68,7 +65,7 @@ export default {
     addItem () {
       this.$refs.modal.$emit('add');
     },
-    ...mapActions('devices', ['fetchAll'])
+    ...mapActions('devices', ['fetchAll', 'toggle'])
   },
   mounted () {
     this.fetchAll();
