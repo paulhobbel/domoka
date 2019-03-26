@@ -1,7 +1,7 @@
 import Koa from 'koa';
 import Boom from 'boom';
 import { getRepository } from 'typeorm';
-import { Device, DeviceType } from '../entities';
+import { Device } from '../entities';
 
 export class DeviceController {
 
