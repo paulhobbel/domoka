@@ -4,7 +4,6 @@ class WorkerClient {
     client: MqttClient;
 
     constructor(private ip: string) {
-        console.log(ip);
     }
 
     /**
@@ -12,11 +11,14 @@ class WorkerClient {
      */
     async connect() {
         return new Promise((resolve, reject) => {
+            console.log(`[WorkerClient]: Connecting to mqtt://${this.ip}`);
             this.client = Mqtt.connect(`mqtt://${this.ip}`);
 
             this.client.once('error', reject);
             this.client.once('connect', resolve);
-        });
+        }).then(() => {
+            console.log('[WorkerClient]: Connected');
+        })
     }
 
     /**
@@ -38,4 +40,4 @@ class WorkerClient {
     }
 }
 
-export default new WorkerClient(process.env.MQTT_IP || 'localhost');
+export default new WorkerClient(process.env.MQTT_HOST || 'localhost');

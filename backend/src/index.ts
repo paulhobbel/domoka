@@ -11,10 +11,9 @@ import Worker from './worker';
 
 (async () => {
     await Database.connect();
-    console.log('> Database connected');
+    console.log('[Database]: Connected');
 
     await Worker.connect();
-    console.log('> Worker connected');
 
     const app = new Koa();
 
@@ -24,7 +23,7 @@ import Worker from './worker';
     app.use(AppRouter.routes());
 
     app.listen(3000, () => {
-        console.log('> Server listening at port 3000');
+        console.log('[App]: Server listening at port 3000');
     });
 })();
 
