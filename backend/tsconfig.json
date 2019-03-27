@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "lib": ["es2017"],
+    "declaration": true,
+    "sourceMap": true,
+    "strict": true,
+    "outDir": "lib",
+    "sourceRoot": "src",
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "pretty": true,
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}

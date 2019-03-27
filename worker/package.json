@@ -1,0 +1,27 @@
+{
+  "name": "domoka-worker",
+  "version": "1.0.0",
+  "description": "The worker of Domoka, mainly processes kaku commands",
+  "main": "lib/index.js",
+  "repository": "https://github.com/paulhobbel/domoka.git",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10",
+    "typescript": "^3.3.4000"
+  },
+  "dependencies": {
+    "@types/node": "^11.11.8",
+    "@types/rpio": "^0.0.2",
+    "dotenv": "^7.0.0",
+    "mqtt": "^2.18.8",
+    "rpio": "^1.0.13"
+  },
+  "optionalDependencies": {
+    "rpio": "^1.0.13"
+  }
+}
