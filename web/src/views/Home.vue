@@ -25,15 +25,15 @@
       img widht= 148
       title="Power overview">
         <b-card-text>
-          Power usage: {{ powerUsage }}
+          Power usage: {{ power.powerUsage }} watt
         </b-card-text>
 
         <b-card-text>
-           Power used total: {{ powerUsed }}
+           Power used total: {{ power.powerUsed }} watt
         </b-card-text>
 
         <b-card-text>
-           Power savings: {{ powerSavings }}
+           Power savings: {{ power.powerSavings }} watt
         </b-card-text>
 
       </b-card>
@@ -45,11 +45,11 @@
         img-widht= 148
         title="Cost overview">
           <b-card-text>
-            Cost: €20,56
+            Cost: € {{ power.cost }}
           </b-card-text>
 
           <b-card-text>
-            Money saved: €5,23
+            Money saved: € {{ power.moneySaved }}
           </b-card-text>
 
         </b-card>
@@ -66,13 +66,21 @@ import { mapActions, mapGetters, mapState } from 'vuex';
 export default {
   data: () => ({
     fieldsSchedule: ['name', 'description'],
-    fieldsDevices: ['name', 'location']
-
+    fieldsDevices: ['name', 'location'],
+    power: {
+      powerUsage: 0,
+      powerUsed: 0,
+      powerSavings: 0,
+      cost: 0,
+      moneySaved: 0
+    }
   }),
   computed: {
     ...mapGetters('devices', ['activeDevices']),
     ...mapGetters('schedule', ['activeSchedules']),
-    ...mapState('power', ['powerUsage','powerUsed', 'powerSavings'])
+    ...mapState('power',{
+      power: state => state.power
+    })
   },
   methods: {
     ...mapActions('devices', {
