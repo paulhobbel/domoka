@@ -79,9 +79,9 @@ router.afterEach((to, from) => {
   const pageTitle = to.meta.title;
 
   if (pageTitle) {
-    document.title = `Domoca - ${pageTitle}`;
+    document.title = `Domoka - ${pageTitle}`;
   } else {
-    document.title = 'Domoca';
+    document.title = 'Domoka';
   }
 });
 
